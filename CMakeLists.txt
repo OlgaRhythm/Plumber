@@ -2,7 +2,8 @@
 # укажите здесь логику для конкретного проекта.
 #
 cmake_minimum_required (VERSION 3.8)
-set(CMAKE_TOOLCHAIN_FILE E:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "vcpkg toolchain file")
+set(CMAKE_TOOLCHAIN_FILE D:/Program\ Files/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "vcpkg toolchain file")
+# set(CMAKE_TOOLCHAIN_FILE D:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "vcpkg toolchain file")
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -13,7 +14,7 @@ endif()
 project ("Plumber")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (Plumber "src/main.cpp" "src/window.h")
+add_executable (Plumber "src/main.cpp" "src/window.h" "src/units.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Plumber PROPERTY CXX_STANDARD 20)
