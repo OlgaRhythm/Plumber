@@ -5,6 +5,6 @@ using namespace std;
 
 int main()
 {
-
+	showWindow();
 	return 0;
 }
