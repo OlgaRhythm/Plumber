@@ -1,11 +1,18 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 
 class Unit {
 public:
 	Unit() {};
-	virtual ~Unit() = 0;
+	virtual ~Unit() {};
 protected:
-	sf::Texture texture;
+	
 	int x;
 	int y;
+	int textureX;
+	int textureY;
+private:
+	// file .png with all texture pictures, global for heirs // файл .png со всеми текстурами, глобальный для наследников
+	static sf::Texture generalTexture; 
 };

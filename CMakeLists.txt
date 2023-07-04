@@ -8,7 +8,7 @@ if (POLICY CMP0141)
 endif()
 
 project ("Plumber")
-add_executable (Plumber "src/main.cpp" "src/window.h" "src/units.h" "src/objects.cpp" "src/creatures.cpp")
+add_executable (Plumber "src/main.cpp" "src/window.h" "src/units.h" "src/objects.cpp" "src/creatures.cpp" "src/creatures.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Plumber PROPERTY CXX_STANDARD 17)
