@@ -1,15 +1,39 @@
 #pragma once
-/*
+
 #include "units.h"
 
-class Plumber : public Unit { //keybord control
+
+class Creature : public Unit { // живые существа
 public:
-	Plumber();
+	// столкновение с блоками (class Object)
+
+	// анимация движения
+
+	// анимация смерти
+
+	// здоровье
 
 };
 
-class Creature : public Unit { //AI
+class Plumber : public Creature { // keybord control
 public:
-	void moving();
+	Plumber(sf::Texture& image, char **TileMap);
+
+	void update(float time, char** TileMap);
+
+	void Collision(bool, char** TileMap);
+
+//private:
+	float dx, dy;
+	sf::FloatRect rect;
+	bool onGround;
+	float currentFrame;
+	sf::Sprite sprite;
+	//char** TileMap;
 };
-*/
+
+class Mob : public Creature {
+	// поведение в режиме ожидания
+
+	// движение по заданой траетории
+};
