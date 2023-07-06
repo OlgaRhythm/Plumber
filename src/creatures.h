@@ -13,6 +13,10 @@ public:
 
 	// здоровье
 
+	// начальная позиция
+
+	bool lived = true;
+
 };
 
 class Plumber : public Creature { // keybord control
@@ -29,6 +33,7 @@ public:
 	bool onGround;
 	float currentFrame;
 	sf::Sprite sprite;
+	float offsetX = 0, offsetY = 0;
 	//char** TileMap;
 };
 

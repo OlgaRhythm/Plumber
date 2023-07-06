@@ -65,9 +65,9 @@ public:
 		if (dx > 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, 244, rect.width, rect.height));
 		if (dx == 0) { currentFrame = 0; sprite.setTextureRect(sf::IntRect(10, 244, rect.width, rect.height)); }
 	
-		if (rect.top > 32 * 36) { rect.top = ground; dy = 0; onGround = true; }
+		if (rect.top > 32 * 35) { rect.top = ground; dy = 0; onGround = true; }
 
-		sprite.setPosition(rect.left, rect.top);
+		sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
 		dx = 0;
 	}
 

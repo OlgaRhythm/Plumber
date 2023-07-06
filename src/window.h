@@ -92,6 +92,9 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
             }
         }
 
+        if (p.rect.left > 550) p.offsetX = p.rect.left - 550;
+        if (p.rect.top < 250) p.offsetY = p.rect.top - 250;
+
         p.update(time, TileMap);
 
         window.clear(Color::White);
@@ -102,7 +105,7 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
                 if (TileMap[i][j] == '0') { rectangle.setFillColor(Color::Green); TileMap[i][j] = '1'; }
                 if (TileMap[i][j] == '1') { rectangle.setFillColor(Color::Yellow); TileMap[i][j] = '0'; }
                 if (TileMap[i][j] == ' ') continue;
-                rectangle.setPosition(j * tile, i * tile);
+                rectangle.setPosition(j * tile - p.offsetX, i * tile - p.offsetY);
                 window.draw(rectangle);
             }
         }
