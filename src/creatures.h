@@ -5,17 +5,39 @@
 
 class Creature : public Unit { // живые существа
 public:
-	// столкновение с блоками (class Object)
+	void Collision(bool, char** TileMap); // столкновение
 
-	// анимация движения
+	void update(float time, char** TileMap); // анимация
 
-	// анимация смерти
+	bool isLiving(); // живой или нет
 
-	// здоровье
+	void deathAnimation(); // анимация смерти
 
-	// начальная позиция
+	void movingAnimation(); // анимация движения и покоя
 
-	bool lived = true;
+	void moveToTheLeft(float acceleration);
+
+	void moveToTheRight(float acceleration);
+
+	void jump(float acceleration);
+
+	void offsetting(float left, float right);
+
+	float getOffsetX();
+
+	float getOffsetY();
+
+	sf::Sprite getSprite();
+
+protected:
+	int curHealth;
+	int startHealth;
+	sf::FloatRect rect;
+	bool onGround;
+	float dx, dy;
+	float currentFrame;
+	sf::Sprite sprite;
+	float offsetX = 0, offsetY = 0;
 
 };
 
@@ -27,14 +49,13 @@ public:
 
 	void Collision(bool, char** TileMap);
 
-//private:
-	float dx, dy;
-	sf::FloatRect rect;
-	bool onGround;
-	float currentFrame;
-	sf::Sprite sprite;
-	float offsetX = 0, offsetY = 0;
-	//char** TileMap;
+	void deathAnimation(float); // анимация смерти
+
+	void movingAnimation(float); // анимация движения и покоя
+
+
+
+//private: 
 };
 
 class Mob : public Creature {

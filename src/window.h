@@ -79,21 +79,16 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
         }
 
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
-            p.dx = -0.1;
-           
+            p.moveToTheLeft(0.1);
         } 
         else if (Keyboard::isKeyPressed(Keyboard::Right)) {
-            p.dx = 0.1;
+            p.moveToTheRight(0.1);
         } 
         if (Keyboard::isKeyPressed(Keyboard::Up)) {
-            if (p.onGround) {
-                p.dy = -0.4;
-                p.onGround = false;
-            }
+            p.jump(0.4);
         }
 
-        if (p.rect.left > 550) p.offsetX = p.rect.left - 550;
-        if (p.rect.top < 250) p.offsetY = p.rect.top - 250;
+        p.offsetting(550, 250);
 
         p.update(time, TileMap);
 
@@ -105,12 +100,12 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
                 if (TileMap[i][j] == '0') { rectangle.setFillColor(Color::Green); TileMap[i][j] = '1'; }
                 if (TileMap[i][j] == '1') { rectangle.setFillColor(Color::Yellow); TileMap[i][j] = '0'; }
                 if (TileMap[i][j] == ' ') continue;
-                rectangle.setPosition(j * tile - p.offsetX, i * tile - p.offsetY);
+                rectangle.setPosition(j * tile - p.getOffsetX(), i * tile - p.getOffsetY());
                 window.draw(rectangle);
             }
         }
 
-        window.draw(p.sprite);
+        window.draw(p.getSprite());
         window.display();
     }
 

@@ -8,14 +8,13 @@ public:
 	virtual ~Unit() {};
 protected:
 	
-	int x;
-	int y;
+	int x; // начальная
+	int y; //	позиция
+
 	int textureX;
 	int textureY;
-	int ground = 200;
-
 
 private:
-	// file .png with all texture pictures, global for heirs // файл .png со всеми текстурами, глобальный для наследников
-	static sf::Texture generalTexture; 
+	// general Tile map 
+	static char** TileMap;
 };
