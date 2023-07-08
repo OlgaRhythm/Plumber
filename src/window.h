@@ -85,7 +85,7 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
             p.moveToTheRight(0.1);
         } 
         if (Keyboard::isKeyPressed(Keyboard::Up)) {
-            p.jump(0.4);
+            p.jump(0.5);
         }
 
         p.offsetting(550, 250);

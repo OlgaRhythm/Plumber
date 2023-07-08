@@ -103,6 +103,7 @@ void Creature::Collision(bool dir, char** TileMap) {
 		currentFrame = 0;
 		startHealth = 1;
 		curHealth = startHealth;
+		spriteDirection = true; // true -> right, false -> left
 	}
 
 	void Plumber::Collision(bool dir, char** TileMap) {
@@ -150,9 +151,31 @@ void Creature::Collision(bool dir, char** TileMap) {
 		currentFrame += 0.005 * time;
 		if (currentFrame > 3) currentFrame -= 3;
 
-		if (dx < 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 73 + 88, rect.top, -rect.width, rect.height));
-		if (dx > 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, rect.top, rect.width, rect.height));
-		if (dx == 0) { currentFrame = 0; sprite.setTextureRect(sf::IntRect(10, rect.top, rect.width, rect.height)); }
+		if (dx < 0) {
+			spriteDirection = false;
+			if (dy > 0 || dy < 0) {
+				sprite.setTextureRect(sf::IntRect(88 * 3 + rect.width + 88, rect.top, -rect.width, rect.height));
+			}
+			else sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + rect.width + 88, rect.top, -rect.width, rect.height));
+		}
+		if (dx > 0) {
+			spriteDirection = true;
+			if (dy > 0 || dy < 0) {
+				sprite.setTextureRect(sf::IntRect(88 * 3 + 88, rect.top, rect.width, rect.height));
+			}	
+			else sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, rect.top, rect.width, rect.height));
+		}
+		if (dx == 0) {
+			if (spriteDirection) {
+				currentFrame = 0; 
+				sprite.setTextureRect(sf::IntRect(10, rect.top, rect.width, rect.height));
+			}
+			else {
+				currentFrame = 0;
+				sprite.setTextureRect(sf::IntRect(83, rect.top, -rect.width, rect.height));
+			}
+			 
+		}
 	}
 
 	void Plumber::deathAnimation(float time) {

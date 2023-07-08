@@ -62,10 +62,8 @@ public:
 	void deathAnimation(float); // анимация смерти
 
 	void movingAnimation(float); // анимация движения и покоя
-
-
-
-//private: 
+private: 
+	bool spriteDirection;
 };
 
 class Mob : public Creature {
