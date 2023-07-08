@@ -5,18 +5,18 @@
 // Creature
 
 void Creature::Collision(bool dir, char** TileMap) {
-	for (size_t i = (rect.top) / 32; i < (rect.top + rect.height) / 32; ++i) {
-		for (size_t j = rect.left / 32; j < (rect.left + rect.width) / 32; ++j) {
+	/*for (size_t i = y / 32; i < (y + rect.height) / 32; ++i) {
+		for (size_t j = x / 32; j < (x + rect.width) / 32; ++j) {
 			if (TileMap[i][j] == 'B') {
-				if (dx > 0 && !dir) rect.left = j * 32 - rect.width; // right
-				if (dx < 0 && !dir) rect.left = j * 32 + 32; // left
+				if (dx > 0 && !dir) x = j * 32 - rect.width; // right
+				if (dx < 0 && !dir) x = j * 32 + 32; // left
 				if (dy > 0 && dir) { // down
-					rect.top = i * 32 - rect.height;
+					y = i * 32 - rect.height;
 					dy = 0;
 					onGround = true;
 				}
 				if (dy < 0 && dir) { // up
-					rect.top = i * 32 + 32;
+					y = i * 32 + 32;
 					dy = 0;
 				}
 			}
@@ -27,27 +27,24 @@ void Creature::Collision(bool dir, char** TileMap) {
 			}
 		}
 	}
+	*/
 }
 
 	void Creature::update(float time, char** TileMap) {
-		rect.left += dx * time;
+		/*x += dx * time;
 		Collision(false, TileMap);
 		if (!onGround) dy += 0.0005 * time;
-		rect.top += dy * time;
+		y += dy * time;
 		onGround = false;
 		Collision(true, TileMap);
 
-		currentFrame += 0.005 * time;
-		if (currentFrame > 3) currentFrame -= 3;
-		
-		if (dx < 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 73 + 88, 244, -rect.width, rect.height));
-		if (dx > 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, 244, rect.width, rect.height));
-		if (dx == 0) { currentFrame = 0; sprite.setTextureRect(sf::IntRect(10, 244, rect.width, rect.height)); }
-	
-		//if (rect.top > 32 * 35) { rect.top = ground; dy = 0; onGround = true; }
+		if (isLiving()) movingAnimation();
+		//if (y > 32 * 35) { y = ground; dy = 0; onGround = true; }
+		else deathAnimation(time);
 
-		sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
+		sprite.setPosition(x - offsetX, y - offsetY);
 		dx = 0;
+		*/
 	}
 
 	bool Creature::isLiving() {
@@ -79,8 +76,8 @@ void Creature::Collision(bool dir, char** TileMap) {
 	}
 
 	void Creature::offsetting(float left, float top) {
-		if (rect.left > left) offsetX = rect.left - left;
-		if (rect.top < top) offsetY = rect.top - top;
+		if (x > left) offsetX = x - left;
+		if (y < top) offsetY = y - top;
 	}
 
 	float Creature::getOffsetX() {
@@ -99,7 +96,9 @@ void Creature::Collision(bool dir, char** TileMap) {
 // Plumber
 	Plumber::Plumber(sf::Texture &image, char** TileMap) {
 		sprite.setTexture(image);
-		rect = sf::FloatRect(100, 244, 73, 80);
+		x = 100;
+		y = 244;
+		rect = sf::FloatRect(100, 260, 73, 80);
 		dx = dy = 0;
 		currentFrame = 0;
 		startHealth = 1;
@@ -107,18 +106,18 @@ void Creature::Collision(bool dir, char** TileMap) {
 	}
 
 	void Plumber::Collision(bool dir, char** TileMap) {
-		for (size_t i = (rect.top )/32; i < (rect.top+rect.height)/32; ++i) {
-			for (size_t j = rect.left/32; j < (rect.left+rect.width)/32; ++j) {
+		for (size_t i = y/32; i < (y+rect.height)/32; ++i) {
+			for (size_t j = x/32; j < (x+rect.width)/32; ++j) {
 				if (TileMap[i][j] == 'B') {
-					if (dx > 0 && !dir) rect.left = j * 32 - rect.width; // right
-					if (dx < 0 && !dir) rect.left = j * 32 + 32; // left
+					if (dx > 0 && !dir) x = j * 32 - rect.width; // right
+					if (dx < 0 && !dir) x = j * 32 + 32; // left
 					if (dy > 0 && dir) { // down
-						rect.top = i * 32 - rect.height;
+						y = i * 32 - rect.height;
 						dy = 0;
 						onGround = true;
 					}
 					if (dy < 0 && dir) { // up
-						rect.top = i * 32 + 32;
+						y = i * 32 + 32;
 						dy = 0; 
 					}
 				}
@@ -132,18 +131,18 @@ void Creature::Collision(bool dir, char** TileMap) {
 	}
 
 	void Plumber::update(float time, char** TileMap) {
-		rect.left += dx * time;
+		x += dx * time;
 		Collision(false, TileMap);
 		if (!onGround) dy += 0.0005 * time;
-		rect.top += dy * time;
+		y += dy * time;
 		onGround = false;
 		Collision(true, TileMap);
 
 		if (isLiving()) movingAnimation(time);
-		//if (rect.top > 32 * 35) { rect.top = ground; dy = 0; onGround = true; }
+		//if (y > 32 * 35) { y = ground; dy = 0; onGround = true; }
 		else deathAnimation(time);
 
-		sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
+		sprite.setPosition(x - offsetX, y - offsetY);
 		dx = 0;
 	}
 
@@ -151,9 +150,9 @@ void Creature::Collision(bool dir, char** TileMap) {
 		currentFrame += 0.005 * time;
 		if (currentFrame > 3) currentFrame -= 3;
 
-		if (dx < 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 73 + 88, 244, -rect.width, rect.height));
-		if (dx > 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, 244, rect.width, rect.height));
-		if (dx == 0) { currentFrame = 0; sprite.setTextureRect(sf::IntRect(10, 244, rect.width, rect.height)); }
+		if (dx < 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 73 + 88, rect.top, -rect.width, rect.height));
+		if (dx > 0) sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, rect.top, rect.width, rect.height));
+		if (dx == 0) { currentFrame = 0; sprite.setTextureRect(sf::IntRect(10, rect.top, rect.width, rect.height)); }
 	}
 
 	void Plumber::deathAnimation(float time) {

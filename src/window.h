@@ -7,37 +7,37 @@
 using namespace sf;
 
 const int H = 20;
-const int W = 37;
+const int W = 66;
 const int tile = 32; // размер плитки
 
 char TileMap1[H][W] = {
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",// 0
-    "B                                  B",// 1
-    "B   BBB   B     BB   BB  BBB       B",// 2
-    "B   B  B  B    B  B B  B B  B      B",// 3
-    "B   BBB   B    B  B B  B B  B      B",// 4
-    "B   B  B  B    B  B B  B B  B      B",// 5
-    "B   BBB   BBBB  BB   BB  BBB       B",// 6
-    "B                                  B",// 7
-    "B                                  B",// 8
-    "B                                  B",// 9
-    "B       BBBB                       B",// 10
-    "B                   BBBBB          B",// 11
-    "B                                  B",// 12
-    "B     000                          B",// 13
-    "B                                  B",// 14
-    "B               BBB                B",// 15
-    "B       B      B   B     BBB       B",// 16
-    "B      B B    B     B   B   B      B",// 17
-    "B     B   B  B       B B     B     B",// 18
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",// 19
+    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",// 0
+    "B                                                        B",// 1
+    "B   BBB   B     BB   BB  BBB                             B",// 2
+    "B   B  B  B    B  B B  B B  B                            B",// 3
+    "B   BBB   B    B  B B  B B  B                            B",// 4
+    "B   B  B  B    B  B B  B B  B                            B",// 5
+    "B   BBB   BBBB  BB   BB  BBB               0             B",// 6
+    "B                                                        B",// 7
+    "B                0000                          B         B",// 8
+    "B                                        B               B",// 9
+    "B       BBBB                   BBBB                      B",// 10
+    "B            00     BBBBB                                B",// 11
+    "B                         0                              B",// 12
+    "B     000                0                               B",// 13
+    "B                       0       0                        B",// 14
+    "B               BBB             0                        B",// 15
+    "B       B      B B B     BBB    0                        B",// 16
+    "B      B B    B     B   B   B                            B",// 17
+    "B     B   B  B       B B     B                           B",// 18
+    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",// 19
 };
 
 
 int temp = 0;
 
 void showWindow(const char* spriteListObjects, const char* spriteListMainCharacter, const char* spriteListMobs) {
-    sf::RenderWindow window(sf::VideoMode(tile * W, tile * H), "Ordinary Plumber");
+    sf::RenderWindow window(sf::VideoMode(tile * H * 2, tile * H), "Ordinary Plumber");
     
     Texture t;
     //t.loadFromFile(spriteListMainCharacter);

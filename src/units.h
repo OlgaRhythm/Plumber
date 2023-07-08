@@ -8,8 +8,8 @@ public:
 	virtual ~Unit() {};
 protected:
 	
-	int x; // начальная
-	int y; //	позиция
+	float x; // начальная
+	float y; //	позиция
 
 	int textureX;
 	int textureY;

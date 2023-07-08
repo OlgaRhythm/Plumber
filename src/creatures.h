@@ -2,9 +2,19 @@
 
 #include "units.h"
 
+/*class Visitor {
+public:
+	void visit() {}
+};
+
+class DeathAnimation : public Visitor {
+	void visit(Plumber* ptr) {}
+};
+*/
 
 class Creature : public Unit { // живые существа
 public:
+
 	void Collision(bool, char** TileMap); // столкновение
 
 	void update(float time, char** TileMap); // анимация
@@ -32,7 +42,7 @@ public:
 protected:
 	int curHealth;
 	int startHealth;
-	sf::FloatRect rect;
+	sf::FloatRect rect; //left, top, wigth, height
 	bool onGround;
 	float dx, dy;
 	float currentFrame;

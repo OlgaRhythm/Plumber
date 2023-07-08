@@ -26,10 +26,6 @@ class Moving : public Object {
 
 };
 
-class BoilingWater : public Object { // Observer
-
-};
-
 class Raft : public Object {
 
 };
@@ -39,14 +35,6 @@ class Pipe : public Object {
 };
 
 class Tap : public Object {
-
-};
-
-class Jet : public Object { // Observer
-
-};
-
-class Valve : public Object { //Observable
 
 };
 
@@ -62,11 +50,52 @@ class Background : public Object {
 
 };
 
-////
-class Listener
-{
-public:
-    void AddEventListener (
-		Valve* listener, void (Valve ::* action) (void)
-    );
+class BoilingWater : public Object, public IObserver { // Observer
+
 };
+
+class Jet : public Object, public IObserver { // Observer
+
+};
+
+class Valve : public Object, public Observable { //Observable
+
+};
+
+//// паттерн Наблюдатель (примитивный)
+class IObserver {
+public:
+	virtual void act() = 0;
+};
+
+class Observable {
+public:
+	Observable() : list(nullptr), size(0) {}
+
+	Observable(IObserver *obs) : list(new IObserver* [1]), size(1) {
+		list[0] = obs;
+	}
+
+	virtual ~Observable() {
+		delete[] list;
+		list = nullptr;
+	}
+	void addObserver(IObserver *obs) {
+		++size;
+	}
+
+	void removeObserver(IObserver *obs) {
+		--size;
+	}
+
+	void notifyObservers() {
+		for (size_t i = 0; i < size; ++i) list[i]->act();
+	}
+
+private:
+	IObserver** list;
+	int size;
+};
+
+
+
