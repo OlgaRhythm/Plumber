@@ -11,9 +11,6 @@ protected:
 	float x; // начальная
 	float y; //	позиция
 
-	int textureX;
-	int textureY;
-
 private:
 	// general Tile map 
 	static char** TileMap;

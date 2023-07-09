@@ -104,6 +104,7 @@ void Creature::Collision(bool dir, char** TileMap) {
 		startHealth = 1;
 		curHealth = startHealth;
 		spriteDirection = true; // true -> right, false -> left
+		onGround = false;
 	}
 
 	void Plumber::Collision(bool dir, char** TileMap) {
@@ -138,7 +139,7 @@ void Creature::Collision(bool dir, char** TileMap) {
 		y += dy * time;
 		onGround = false;
 		Collision(true, TileMap);
-
+		//std::cout << dx << " " << dy << "\n";
 		if (isLiving()) movingAnimation(time);
 		//if (y > 32 * 35) { y = ground; dy = 0; onGround = true; }
 		else deathAnimation(time);
@@ -176,6 +177,7 @@ void Creature::Collision(bool dir, char** TileMap) {
 			}
 			 
 		}
+		
 	}
 
 	void Plumber::deathAnimation(float time) {
