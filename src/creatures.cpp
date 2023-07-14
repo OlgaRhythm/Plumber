@@ -188,6 +188,18 @@ void Creature::Collision(bool dir, char** TileMap) {
 		}
 	}
 
+	void Plumber::moveWithKeyboard() { // перемещение при нажатии нужной клавиши
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			(*this).moveToTheLeft(0.1);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			(*this).moveToTheRight(0.1);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			(*this).jump(0.5);
+		}
+	}
+
 /*
 class Mob : public Creature {
 	// поведение в режиме ожидания

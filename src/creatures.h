@@ -62,6 +62,8 @@ public:
 	void deathAnimation(float); // анимация смерти
 
 	void movingAnimation(float); // анимация движения и покоя
+
+	void moveWithKeyboard(); // перемещение при нажатии нужной клавиши
 private: 
 	bool spriteDirection;
 };
