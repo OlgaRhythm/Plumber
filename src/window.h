@@ -62,9 +62,9 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
 
     while (window.isOpen())
     {
-        float time = clock.getElapsedTime().asMilliseconds() * 3; // фиксируем время с последнего тика 
-        clock.restart(); //! Надо изменить, а то персонаж двигается рывками
-        //float time = 4.0f;
+        //float time = clock.getElapsedTime().asMilliseconds() * 3; // фиксируем время с последнего тика 
+        //clock.restart(); //! Надо изменить, а то персонаж двигается рывками
+        float time = 1.0f;
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -77,7 +77,7 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
                 window.close();
             }
         }
-
+        /*
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
             p.moveToTheLeft(0.1);
         } 
@@ -87,12 +87,23 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
         if (Keyboard::isKeyPressed(Keyboard::Up)) {
             p.jump(0.5);
         }
+        */
+        p.moveWithKeyboard();
 
         p.offsetting(550, 250);
 
+        // создается char 5 массивов, которые не меняются другими функциями, только заполняются
+        // каждый массив соответствует своему уровню
+        // в Map передается свой указатель для вывода этого массива
+
+        /// Map (будет 5 разных карт со своими массивами и настройками фона)
+        // смена карты происходит, когда встанем на трубу (in_teleport)
+        // case, вызывается один из методов Map, который и выводит карту на экран
+
         p.update(time, TileMap);
 
-        window.clear(Color::White);
+
+        window.clear(Color::White); // цвет зависит от карты
 
         for (size_t i = 0; i < H; ++i) {
             for (size_t j = 0; j < W; ++j) {
@@ -106,7 +117,9 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
         }
 
         window.draw(p.getSprite());
+        // конец содержимого метода
         window.display();
+
     }
 
     return;
