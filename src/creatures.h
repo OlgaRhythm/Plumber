@@ -53,7 +53,7 @@ protected:
 
 class Plumber : public Creature { // keybord control
 public:
-	Plumber(sf::Texture& image, char **TileMap);
+	Plumber(sf::Texture& image);
 
 	void update(float time, char** TileMap);
 

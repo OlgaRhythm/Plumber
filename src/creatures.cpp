@@ -94,7 +94,7 @@ void Creature::Collision(bool dir, char** TileMap) {
 	
 
 // Plumber
-	Plumber::Plumber(sf::Texture &image, char** TileMap) {
+	Plumber::Plumber(sf::Texture &image) {
 		sprite.setTexture(image);
 		x = 100;
 		y = 244;
