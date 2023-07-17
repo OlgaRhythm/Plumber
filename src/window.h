@@ -12,26 +12,15 @@ using namespace sf;
 const int tile = 32; // размер плитки
 
 int temp = 0;
-
+// добавить 5 названий текстовых файлов с картами (на самом деле файлов 15)
 void showWindow(const char* spriteListObjects, const char* spriteListMainCharacter, const char* spriteListMobs) {
     sf::RenderWindow window(sf::VideoMode(tile * 20 * 2, tile * 20), "Ordinary Plumber");
     
     Texture t;
     t.loadFromFile("img/spriteListMainCharacterOriginal.png");
-    
-    /*
-    char** TileMap = new char* [H];
-    for (size_t i = 0; i < H; ++i) {
-        TileMap[i] = new char[W];
-        for (size_t j = 0; j < W; ++j) {
-            TileMap[i][j] = TileMap1[i][j];
-        }
-    }
-    */
 
-
-    Map MainMap(26, 66, 0);//
-    MainMap.Map1();//
+    Map MainMap(26, 66);
+    MainMap.Map1();
 
     //float currentFrame = 0;
     Plumber p(t); // создание персонажа
@@ -50,14 +39,8 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) {
-                /*
-                for (size_t i = 0; i < H; ++i) {
-                    delete[] TileMap[i];
-                }
-                delete[] TileMap;
-                */
-                //MainMap.~Map();
                 window.close();
+                //MainMap.~Map();
             }
         }
         
@@ -65,15 +48,7 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
 
         p.offsetting(550, 250);
 
-        p.update(time, MainMap.solidObjects);//
-
-        // создается char 5 массивов, которые не меняются другими функциями, только заполняются
-        // каждый массив соответствует своему уровню
-        // в Map передается свой указатель для вывода этого массива
-
-        /// Map (будет 5 разных карт со своими массивами и настройками фона)
-        // смена карты происходит, когда встанем на трубу (in_teleport)
-        // case, вызывается один из методов Map, который и выводит карту на экран
+        p.update(time, MainMap.backgroundAndObjects);
 
         MainMap.update(window, p);
 

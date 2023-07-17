@@ -11,3 +11,11 @@ int main()
 	showWindow(spriteListObjects, spriteListMainCharacter, spriteListMobs);
 	return 0;
 }
+
+/* TASKS:
+* 1) Карта (хранение)
+* 2) Класс Object и наследники
+* 3) класс Creature (Collision, взаимодействие с разными блоками)
+* 4) класс Plumber, Mob - взаимодействие между собой
+* 
+*/
