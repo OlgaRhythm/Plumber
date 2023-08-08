@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include "window.h"
 using namespace std;
-
+//tile = 32
 
 int main()
 {

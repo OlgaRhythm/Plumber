@@ -7,6 +7,9 @@ public:
 	void update() { // анимация
 
 	}
+protected:
+	bool collision = false;
+
 private:
 	bool solid;
 	bool destructible;
@@ -15,8 +18,39 @@ private:
 };
 
 class Solid : public Object {
+	Solid(sf::Texture& image);
 
 };
+
+Solid::Solid(sf::Texture& image) {
+	sprite.setTexture(image);
+	rect = sf::FloatRect(0, 0, 32, 32);
+	currentFrame = 0;
+	collision = true;
+}
+
+
+class Pipe : public Object {
+	Pipe(sf::Texture& image);
+};
+
+Pipe::Pipe(sf::Texture& image) {
+	sprite.setTexture(image);
+	rect = sf::FloatRect(160, 0, 32, 32);
+	currentFrame = 0;
+	collision = true;
+}
+
+class Tap : public Object {
+	Tap(sf::Texture& image);
+};
+
+Tap::Tap(sf::Texture& image) {
+	sprite.setTexture(image);
+	rect = sf::FloatRect(32, 32, 32, 32);
+	currentFrame = 0;
+	collision = true;
+}
 
 class Destructible : public Object {
 
@@ -30,13 +64,6 @@ class Raft : public Object {
 
 };
 
-class Pipe : public Object {
-
-};
-
-class Tap : public Object {
-
-};
 
 class Teleport : public Object {
 

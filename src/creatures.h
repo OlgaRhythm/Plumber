@@ -42,11 +42,8 @@ public:
 protected:
 	int curHealth;
 	int startHealth;
-	sf::FloatRect rect; //left, top, wigth, height
 	bool onGround;
 	float dx, dy;
-	float currentFrame;
-	sf::Sprite sprite;
 	float offsetX = 0, offsetY = 0;
 
 };

@@ -3,6 +3,7 @@
 #include "creatures.h"
 
 #include <iostream>
+#include <fstream>
 
 const int H_TM = 20;
 const int W_TM = 66;
@@ -87,7 +88,19 @@ public:
 	}
 
 	// заполнение из тестового файла
-	Map(char const* fN_bgAO, char const* fN_uO) { }
+	Map(char const* fN_bgAO, char const* fN_uO) {
+        std::ifstream fin;
+        fin.open("1_bgAO.txt");
+        fin >> H_bgAO >> W_bgAO;
+        allocateCharArr(backgroundAndObjects);
+        char rubbish;
+        for (size_t i = 0; i < H_bgAO; ++i) {
+            for (size_t j = 0; j < W_bgAO; ++j) {
+                fin >> backgroundAndObjects[i][j];
+            }
+            fin >> rubbish;
+        }
+    }
 
     Map(Map &a){}
 
@@ -143,8 +156,12 @@ public:
         }    
     }
 
-	int H = 0; // размеры 
-	int W = 0; // массива
+    int H_bgAO = 0;
+    int W_bgAO = 0;
+    int H_uO = 0; // размеры 
+	int W_uO = 0; // массива
+    int H = 0;
+    int W = 0;
     int tile = 32;
 	int player_x, player_y; //в каких координатах должен появиться персонаж
 	char color = 0; // 0 - Black, 1 - Blue
