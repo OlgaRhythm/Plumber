@@ -19,15 +19,16 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
     Texture t;
     t.loadFromFile("img/spriteListMainCharacterOriginal.png");
 
-    Map MainMap(26, 66);
-    MainMap.Map1();
+    const char fN_bgAO[] = "maps/1_bgAO.txt";
+    const char fN_uO[] = "maps/1_uO.txt";
+
+    Map MainMap(fN_bgAO, fN_uO); // фиксированная длина имени 16 и 14
+
 
     //float currentFrame = 0;
     Plumber p(t); // создание персонажа
 
     Clock clock; //фиксируем время с последнего тика
-
-    //sf::RectangleShape rectangle(sf::Vector2f(tile, tile));
 
     while (window.isOpen())
     {
@@ -46,13 +47,9 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
         
         p.moveWithKeyboard();
 
-        p.offsetting(550, 250);
+        p.offsetting(550, 120); // смещение сцены относительно гг
 
-        p.update(time, MainMap.backgroundAndObjects);
-
-        MainMap.update(window, p);
-
-        window.draw(p.getSprite());
+        MainMap.update(window, p, time);
         
         window.display();
 

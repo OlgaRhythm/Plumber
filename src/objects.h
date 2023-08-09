@@ -17,7 +17,10 @@ private:
 
 };
 
-class Solid : public Object {
+// земля, неизменяемая, solid
+
+class Solid : public Object { // S
+public:
 	Solid(sf::Texture& image);
 
 };
@@ -29,8 +32,10 @@ Solid::Solid(sf::Texture& image) {
 	collision = true;
 }
 
+// трубы, неизменяемые, solid
 
-class Pipe : public Object {
+class Pipe : public Object { // P
+public:
 	Pipe(sf::Texture& image);
 };
 
@@ -41,7 +46,10 @@ Pipe::Pipe(sf::Texture& image) {
 	collision = true;
 }
 
-class Tap : public Object {
+// краны, неизменяемые, solid
+
+class Tap : public Object { // T
+public:
 	Tap(sf::Texture& image);
 };
 

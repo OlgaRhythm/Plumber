@@ -88,18 +88,23 @@ public:
 	}
 
 	// заполнение из тестового файла
-	Map(char const* fN_bgAO, char const* fN_uO) {
+	Map(char const fN_bgAO[16], char const fN_uO[14]) {
         std::ifstream fin;
-        fin.open("1_bgAO.txt");
+        fin.open(fN_bgAO);
         fin >> H_bgAO >> W_bgAO;
-        allocateCharArr(backgroundAndObjects);
+        std::cout << H_bgAO << " " << W_bgAO << "\n";
+        allocateCharArr(backgroundAndObjects, H_bgAO, W_bgAO);
         char rubbish;
         for (size_t i = 0; i < H_bgAO; ++i) {
             for (size_t j = 0; j < W_bgAO; ++j) {
                 fin >> backgroundAndObjects[i][j];
+                std::cout << backgroundAndObjects[i][j] << " ";
             }
-            fin >> rubbish;
+            std::cout << "\n";
+            //fin >> rubbish;
         }
+        unicObjects = new Unit[0]; // !!!!! пластырь !!!!!
+        std::cout << "Map(char const fN_bgAO[16], char const fN_uO[14]) " << backgroundAndObjects << "\n";
     }
 
     Map(Map &a){}
@@ -140,20 +145,23 @@ public:
     }
 
 	// вывод всей карты на экран (вместе с существами)
-	void update(sf::RenderWindow &window, Plumber &p) {
+	void update(sf::RenderWindow &window, Plumber &p, float time) {
         sf::RectangleShape rectangle(sf::Vector2f(tile, tile)); // костыль
 
         window.clear(sf::Color::White); // цвет зависит от карты
 
-        for (size_t i = 0; i < H; ++i) {
-            for (size_t j = 0; j < W; ++j) {
-                if (backgroundAndObjects[i][j] == 'B') rectangle.setFillColor(sf::Color::Red);
-                if (backgroundAndObjects[i][j] == '0') { rectangle.setFillColor(sf::Color::Yellow); }
-                if (backgroundAndObjects[i][j] == ' ') continue;
+        for (size_t i = 0; i < H_bgAO; ++i) {
+            for (size_t j = 0; j < W_bgAO; ++j) {
+                if (backgroundAndObjects[i][j] == 'P') rectangle.setFillColor(sf::Color::Red);
+                if (backgroundAndObjects[i][j] == 'T') { rectangle.setFillColor(sf::Color::Yellow); }
+                if (backgroundAndObjects[i][j] == 'S') rectangle.setFillColor(sf::Color::Green);
+                if (backgroundAndObjects[i][j] == '`') continue;
                 rectangle.setPosition(j * tile - p.getOffsetX(), i * tile - p.getOffsetY());
                 window.draw(rectangle);
             }
         }    
+        p.update(time, backgroundAndObjects);
+        window.draw(p.getSprite());
     }
 
     int H_bgAO = 0;
@@ -165,8 +173,8 @@ public:
     int tile = 32;
 	int player_x, player_y; //в каких координатах должен по€витьс€ персонаж
 	char color = 0; // 0 - Black, 1 - Blue
-	char** backgroundAndObjects = nullptr; // backgroung и solid (pipe, tap); coin, destructible;
-	Unit* unicObjects = nullptr;  //moving, boilingWater, raft, jet, valve, teleport, Creature, triggers
+	char** backgroundAndObjects = nullptr; // backgroung и solid (pipe, tap;
+	Unit* unicObjects = nullptr;  //coin,destructible; moving, boilingWater, raft, jet, valve, teleport, Creature, triggers
 
 private:
 
@@ -195,13 +203,21 @@ private:
 		}
 	}
 
-	// выделение пам€ти дл€ двумерных массивов карты
-	void allocateCharArr(char ** &arr) {
-		char** arr_tmp = new char* [H];
-		for (size_t i = 0; i < H; ++i) {
-			arr_tmp[i] = new char[W];
-		}
+    // выделение пам€ти дл€ двумерных массивов карты заданных размеров
+    void allocateCharArr(char**& arr, int _H, int _W) {
+        char** arr_tmp = new char* [_H];
+        for (size_t i = 0; i < _H; ++i) {
+            arr_tmp[i] = new char[_W];
+        }
         arr = arr_tmp;
-	}
+    }
 
+    // выделение пам€ти дл€ двумерных массивов карты
+    void allocateCharArr(char**& arr) {
+        char** arr_tmp = new char* [H];
+        for (size_t i = 0; i < H; ++i) {
+            arr_tmp[i] = new char[W];
+        }
+        arr = arr_tmp;
+    }
 };
