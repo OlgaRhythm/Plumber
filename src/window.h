@@ -19,10 +19,11 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
     Texture t;
     t.loadFromFile("img/spriteListMainCharacterOriginal.png");
 
-    const char fN_bgAO[] = "maps/1_bgAO.txt";
-    const char fN_uO[] = "maps/1_uO.txt";
+    const char fN_backgroundObjects[] = "maps/001_bgO.txt";
+    const char fN_inanimateObjects[] = "maps/001_iO.txt";
+    const char fN_aliveObjects[] = "maps/001_aO.txt";
 
-    Map MainMap(fN_bgAO, fN_uO); // фиксированная длина имени 16 и 14
+    Map MainMap(fN_backgroundObjects, fN_inanimateObjects, fN_aliveObjects); // фиксированная длина имени 16 и 14
 
 
     //float currentFrame = 0;
