@@ -39,6 +39,7 @@ public:
 
 	sf::Sprite getSprite();
 
+	//void display();
 protected:
 	int curHealth;
 	int startHealth;

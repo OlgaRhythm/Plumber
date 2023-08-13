@@ -86,6 +86,9 @@ void Creature::Collision(bool dir, char** TileMap) {
 		return sprite;
 	}
 	
+	//void Creature::display() {
+//
+	//}
 
 // Plumber
 	Plumber::Plumber(sf::Texture &image) {

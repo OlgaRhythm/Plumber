@@ -15,19 +15,23 @@ int temp = 0;
 // добавить 5 названий текстовых файлов с картами (на самом деле файлов 15)
 void showWindow(const char* spriteListObjects, const char* spriteListMainCharacter, const char* spriteListMobs) {
     sf::RenderWindow window(sf::VideoMode(tile * 20 * 2, tile * 20), "Ordinary Plumber");
-    
-    Texture t;
-    t.loadFromFile("img/spriteListMainCharacterOriginal.png");
 
     const char fN_backgroundObjects[] = "maps/001_bgO.txt";
     const char fN_inanimateObjects[] = "maps/001_iO.txt";
     const char fN_aliveObjects[] = "maps/001_aO.txt";
 
+    // устанавливаем текстуры для неживых объектов
+    sf::Texture textureForInanimateObjects;
+    textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
+    Object::setCommonTexture(textureForInanimateObjects);
+
     Map MainMap(fN_backgroundObjects, fN_inanimateObjects, fN_aliveObjects); // фиксированная длина имени 16 и 14
 
-
     //float currentFrame = 0;
-    Plumber p(t); // создание персонажа
+    Texture textureForMainCharacter;
+    textureForMainCharacter.loadFromFile("img/spriteListMainCharacterOriginal.png");
+
+    Plumber p(textureForMainCharacter); // создание персонажа
 
     Clock clock; //фиксируем время с последнего тика
 
