@@ -1,5 +1,6 @@
 #pragma once
 #include "units.h"
+#include <iostream>
 
 //// паттерн Наблюдатель (примитивный)
 class IObserver {
@@ -42,10 +43,6 @@ private:
 
 class Object : public Unit {
 public:
-	static void setCommonTexture(sf::Texture &image) {
-		commonTexture = image;
-	}
-
 	sf::Sprite getSprite() {
 		return sprite;
 	}
@@ -62,14 +59,20 @@ public:
 
 		sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
 		window.draw(sprite);
+		//std::cout << "display\n";
 	}
 
-	virtual void getObjectFromPointer(Object* ptr) {};
+	bool isSolid() {
+		return solid;
+	}
 
-protected:
-	bool collision = false;
-	static sf::Texture commonTexture;
+	int type = 0;
+protected:	
 	int tile = 32;
+
+	bool solid = false;
+	bool destructible = false;
+	bool killing = false;
 
 private:
 	//Units
@@ -78,9 +81,7 @@ private:
 		// sf::FloatRect rect; //left, top, wigth, height
 		// sf::Sprite sprite;
 		// float currentFrame;
-	bool solid;
-	bool destructible;
-	bool killing;
+	
 
 };
 
@@ -88,118 +89,33 @@ private:
 
 class Solid : public Object { // S
 public:
-	Solid();
 	Solid(sf::Texture& image);
 
-	void getObjectFromPointer(Object* ptr);
-
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
-
+	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
+	
 };
 
-Solid::Solid() {
-	sprite.setTexture(commonTexture);
-	rect = sf::FloatRect(0, 0, 32, 32);
-	currentFrame = 0;
-	collision = true;
-}
-
-Solid::Solid(sf::Texture& image) {
-	sprite.setTexture(image);
-	rect = sf::FloatRect(0, 0, 32, 32);
-	currentFrame = 0;
-	collision = true;
-}
-
-void Solid::getObjectFromPointer(Object* ptr) {
-		// sf::FloatRect rect; //left, top, wigth, height
-		// sf::Sprite sprite;
-		// float currentFrame;
-	bool solid;
-	bool destructible;
-	bool killing;
-}
-
-/*
-void Solid::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
-/*
-	//!!! Пластырь
-	int tile = 32;
-	sf::RectangleShape rectangle(sf::Vector2f(tile, tile));
-	rectangle.setFillColor(sf::Color::Green);
-	rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(rectangle);
-
-	
-	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(sprite);
-}
-*/
 // трубы, неизменяемые, solid
 
 class Pipe : public Object { // P
 public:
-	Pipe();
-
 	Pipe(sf::Texture& image);
 
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
+	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
 };
-/*
-void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
-	/*
-	//!!! Пластырь
-	int tile = 32;
-	sf::RectangleShape rectangle(sf::Vector2f(tile, tile));
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(rectangle);
-	
-	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(sprite);
-}
-*/
 
-Pipe::Pipe() {
-	sprite.setTexture(commonTexture);
-	rect = sf::FloatRect(160, 0, 32, 32);
-	currentFrame = 0;
-	collision = true;
-}
-
-Pipe::Pipe(sf::Texture& image) {
-	sprite.setTexture(image);
-	rect = sf::FloatRect(160, 0, 32, 32);
-	currentFrame = 0;
-	collision = true;
-}
 
 // краны, неизменяемые, solid
 
 class Tap : public Object { // T
 public:
-	Tap();
-
 	Tap(sf::Texture& image);
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
 };
 
-Tap::Tap() {
-	sprite.setTexture(commonTexture);
-	rect = sf::FloatRect(32, 32, 32, 32);
-	currentFrame = 0;
-	collision = true;
-}
-
-Tap::Tap(sf::Texture& image) {
-	sprite.setTexture(image);
-	rect = sf::FloatRect(32, 32, 32, 32);
-	currentFrame = 0;
-	collision = true;
-}
 /*
 void Tap::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
 	//!!! Пластырь

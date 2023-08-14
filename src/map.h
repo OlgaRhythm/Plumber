@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
 
 /*//////////////////////////////////////////!!!!!!!
 Карты должны будут изначально храниться в текстовом файле. (в моём случае 5 карт)
@@ -35,11 +36,10 @@ public:
 
         // читаем символы бэкграунда
         // readFromFileBackgroundObjects(&fN_bgO_in, H_bgO, W_bgO, backgroundObjects);
-        readFromFileBackgroundObjects(&fN_iO_in, H_bgO, W_bgO, backgroundObjects); //!!! Пластырь !!!/
+        readFromFileBackgroundObjects(&fN_bgO_in, backgroundObjects); //!!! Пластырь !!!/
         
         // заполняем массив интерактивных объектов
-        readFromFileInanimateObjects(&fN_iO_in, H_iO, W_iO, inanimateObjects);
-        
+        readFromFileInanimateObjects(&fN_iO_in, inanimateObjects);
         // заполняем список живых существ (кроме гг)
         //!!! ДОДЕЛАТЬ                                                               //!
         // readFromFileAliveObjects();
@@ -82,17 +82,21 @@ public:
     // вывод всей карты на экран (вместе с существами)
     void update(sf::RenderWindow& window, Plumber& p, float time) {
         window.clear(sf::Color::White); // цвет зависит от карты
-
-        for (size_t i = 0; i < H_bgO; ++i) {
-            for (size_t j = 0; j < W_bgO; ++j) {
-                backgroundObjectsDisplay(backgroundObjects[i][j], window, i, j, p.getOffsetX(), p.getOffsetY(), time);
-                if (i < H_iO && j < W_iO) inanimateObjects[i][j]->display(window, i, j, p.getOffsetX(), p.getOffsetY(), time);
+        for (size_t i = 0; i < H_bgO || i < H_iO; ++i) {
+            for (size_t j = 0; j < W_bgO || j < W_iO; ++j) {
+                //if (i < H_bgO && j < W_bgO) backgroundObjectsDisplay(backgroundObjects[i][j], window, i, j, p.getOffsetX(), p.getOffsetY(), time);
+                if (i < H_iO && j < W_iO) { 
+                    //std::cout << inanimateObjects[i][j]->type << "\n";
+                    inanimateObjects[i][j]->display(window, i, j, p.getOffsetX(), p.getOffsetY(), time); 
+                    
+                }
+                //std::cout << i << " " << j << " " << H_iO << " " << W_iO << "\n";
             }
         }
 
         // for (size_t i = 0; i < S_aO; ++i) { } /// for aliveObjects
 
-        p.update(time, backgroundObjects);
+        p.update(time, inanimateObjects);
         window.draw(p.getSprite());
     }
 
@@ -150,21 +154,23 @@ private:
         else arr = nullptr;
     }
 
-    void readFromFileBackgroundObjects(std::ifstream* fN_bgO_in, int& _H_bgO, int& _W_bgO, char**& backgroundObjects) {
-        *fN_bgO_in >> _H_bgO >> _W_bgO;
-        std::cout << _H_bgO << " " << _W_bgO << "\n";
+    void readFromFileBackgroundObjects(std::ifstream* fN_bgO_in, char**& backgroundObjects) {
+        std::cout << "readFromFileBO\n";
+        *fN_bgO_in >> H_bgO >> W_bgO;
+        std::cout << H_bgO << " " << W_bgO << "\n";
         allocateCharArr(backgroundObjects, H_bgO, W_bgO);
-        for (size_t i = 0; i < _H_bgO; ++i) {
-            for (size_t j = 0; j < _W_bgO; ++j) {
+        for (size_t i = 0; i < H_bgO; ++i) {
+            for (size_t j = 0; j < W_bgO; ++j) {
                 *fN_bgO_in >> backgroundObjects[i][j];
                 std::cout << backgroundObjects[i][j] << " ";
             }
             std::cout << "\n";
         }
-        std::cout << "Map(char const fN_bgO[17], char const fN_uO[16]...) " << backgroundObjects << "\n";
+        std::cout << "readFromFileBackgroundObjects " << backgroundObjects << "\n";
     }
     
-        void readFromFileInanimateObjects(std::ifstream *fN_iO_in, int &H_iO, int &W_iO, Object*** inanimateObjects) {
+        void readFromFileInanimateObjects(std::ifstream *fN_iO_in, Object***& inanimateObjects) {
+            std::cout << "readFromFileInanimateObjects\n";
             *fN_iO_in >> H_iO >> W_iO;
             std::cout << H_iO << " " << W_iO << "\n";
             allocateObjectArr(inanimateObjects, H_iO, W_iO);
@@ -173,11 +179,11 @@ private:
                 for (size_t j = 0; j < W_iO; ++j) {
                     *fN_iO_in >> temp;
                     std::cout << temp << " ";
-                    inanimateObjects[i][j]->getObjectFromPointer(matchingCharAndObject(temp));
-                    //!!!  СДЕЛАТЬ в соответствии со списком всех объектов, заполняется массив                   //!
+                    inanimateObjects[i][j] = matchingCharAndObject(temp); // в соответствии со списком всех объектов, заполняется массив
                 }
                 std::cout << "\n";
             }
+            std::cout << "readFromFileInanimateObjects " << inanimateObjects << "\n";
         }
 
     void backgroundObjectsDisplay(char item, sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
@@ -192,23 +198,33 @@ private:
     }
 
     Object* matchingCharAndObject(char symbol) {
+        // устанавливаем текстуры для неживых объектов
+        sf::Texture textureForInanimateObjects;
+        textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
+
         switch (symbol)
         {
         case 'S': {
-            Object* temp_obj = new Solid();
+            Object* temp_obj = new Solid(textureForInanimateObjects);
             return temp_obj;
             break;
         }
         case 'P': {
-            Object* temp_obj = new Pipe();
+            Object* temp_obj = new Pipe(textureForInanimateObjects);
             return temp_obj;
             break;
         }
         case 'T': {
-            Object* temp_obj = new Tap();
+            Tap* temp_obj = new Tap(textureForInanimateObjects);
+            sf::RenderWindow window1(sf::VideoMode(tile * 2, tile * 2), "test");
+            temp_obj->display(window1, 0, 0, 0.0f, 0.0f, 0.0f);
+            Sleep(5000); ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! не грузит текстуры
             return temp_obj;
             break;
-            break;
+        }
+        case '`': {
+            Object* temp_obj = new Object();
+            return temp_obj; 
         }
         default:
             break;

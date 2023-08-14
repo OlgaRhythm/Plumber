@@ -1,6 +1,7 @@
 #pragma once
 
 #include "units.h"
+#include "objects.h"
 
 /*class Visitor {
 public:
@@ -15,9 +16,9 @@ class DeathAnimation : public Visitor {
 class Creature : public Unit { // живые существа
 public:
 
-	void Collision(bool, char** TileMap); // столкновение
+	void Collision(bool, Object*** TileMap); // столкновение
 
-	void update(float time, char** TileMap); // анимация
+	void update(float time, Object*** TileMap); // анимация
 
 	bool isLiving(); // живой или нет
 
@@ -53,9 +54,9 @@ class Plumber : public Creature { // keybord control
 public:
 	Plumber(sf::Texture& image);
 
-	void update(float time, char** TileMap);
+	void update(float time, Object*** &TileMap);
 
-	void Collision(bool, char** TileMap);
+	void Collision(bool, Object*** &TileMap);
 
 	void deathAnimation(float); // анимация смерти
 

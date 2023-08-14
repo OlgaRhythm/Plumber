@@ -20,11 +20,6 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
     const char fN_inanimateObjects[] = "maps/001_iO.txt";
     const char fN_aliveObjects[] = "maps/001_aO.txt";
 
-    // устанавливаем текстуры для неживых объектов
-    sf::Texture textureForInanimateObjects;
-    textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
-    Object::setCommonTexture(textureForInanimateObjects);
-
     Map MainMap(fN_backgroundObjects, fN_inanimateObjects, fN_aliveObjects); // фиксированная длина имени 16 и 14
 
     //float currentFrame = 0;

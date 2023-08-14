@@ -4,8 +4,8 @@
 
 // Creature
 
-void Creature::Collision(bool dir, char** TileMap) {
-	for (size_t i = y / 32; i < (y + rect.height) / 32; ++i) {
+void Creature::Collision(bool dir, Object*** TileMap) {
+/*	for (size_t i = y / 32; i < (y + rect.height) / 32; ++i) {
 		for (size_t j = x / 32; j < (x + rect.width) / 32; ++j) {
 			if (TileMap[i][j] != '`') {
 				if (dx > 0 && !dir) x = j * 32 - rect.width; // right
@@ -21,10 +21,10 @@ void Creature::Collision(bool dir, char** TileMap) {
 				}
 			}
 		}
-	}
+	}*/
 }
 
-	void Creature::update(float time, char** TileMap) {
+	void Creature::update(float time, Object*** TileMap) {
 		/*x += dx * time;
 		Collision(false, TileMap);
 		if (!onGround) dy += 0.0005 * time;
@@ -104,10 +104,10 @@ void Creature::Collision(bool dir, char** TileMap) {
 		onGround = false;
 	}
 
-	void Plumber::Collision(bool dir, char** TileMap) {
+	void Plumber::Collision(bool dir, Object*** &TileMap) {
 		for (size_t i = y/32; i < (y+rect.height)/32; ++i) {
 			for (size_t j = x/32; j < (x+rect.width)/32; ++j) {
-				if (TileMap[i][j] != '`') {
+				if (TileMap[i][j]->isSolid()) {
 					if (dx > 0 && !dir) x = j * 32 - rect.width; // right
 					if (dx < 0 && !dir) x = j * 32 + 32; // left
 					if (dy > 0 && dir) { // down
@@ -120,16 +120,17 @@ void Creature::Collision(bool dir, char** TileMap) {
 						dy = 0; 
 					}
 				}
-				if (TileMap[i][j] == 'T') {
+				/*if (TileMap[i][j] == 'T') {
 					std::cout << TileMap << " " << TileMap[i][j] << std::endl;
 					TileMap[i][j] = '`';
 					std::cout << "yes" << std::endl;
 				}
+				*/
 			}
 		}
 	}
 
-	void Plumber::update(float time, char** TileMap) {
+	void Plumber::update(float time, Object*** &TileMap) {
 		x += dx * time;
 		Collision(false, TileMap);
 		if (!onGround) dy += 0.0005 * time;
