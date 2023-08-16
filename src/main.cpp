@@ -8,7 +8,27 @@ int main()
 	const char* spriteListObjects("img/spriteListObjectsOriginal.png");
 	const char* spriteListMainCharacter("img/spriteListMainCharacterOriginal.png");
 	const char* spriteListMobs("img/spriteListOriginalMobs.png");
-	showWindow(spriteListObjects, spriteListMainCharacter, spriteListMobs);
+	//showWindow(spriteListObjects, spriteListMainCharacter, spriteListMobs);
+
+    Texture textureForMainCharacter;
+    textureForMainCharacter.loadFromFile("img/spriteListObjectsOriginal.png");
+
+    Solid p(textureForMainCharacter); // создание персонажа
+
+	sf::RenderWindow window(sf::VideoMode(tile * 2, tile * 2), "Ordinary Plumber");
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+
+        }
+        window.draw(p.getSprite());
+        window.display();
+    }
 	return 0;
 }
 

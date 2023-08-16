@@ -30,16 +30,19 @@ public:
     /// заполнение из тестового файла
     Map(char const fN_bgO[17], char const fN_iO[16], char const fN_aO[16]) {
         std::ifstream fN_bgO_in, fN_iO_in, fN_aO_in;
-        fN_bgO_in.open(fN_bgO);
+        fN_bgO_in.open(fN_bgO); //!!! Нужна проверка открытия файла
         fN_iO_in.open(fN_iO);
         fN_aO_in.open(fN_aO);
 
+        std::cout << fN_iO << "\n";
+
         // читаем символы бэкграунда
         // readFromFileBackgroundObjects(&fN_bgO_in, H_bgO, W_bgO, backgroundObjects);
-        readFromFileBackgroundObjects(&fN_bgO_in, backgroundObjects); //!!! Пластырь !!!/
+        readFromFileBackgroundObjects(&fN_bgO_in, backgroundObjects);
         
         // заполняем массив интерактивных объектов
         readFromFileInanimateObjects(&fN_iO_in, inanimateObjects);
+
         // заполняем список живых существ (кроме гг)
         //!!! ДОДЕЛАТЬ                                                               //!
         // readFromFileAliveObjects();
@@ -85,12 +88,12 @@ public:
         for (size_t i = 0; i < H_bgO || i < H_iO; ++i) {
             for (size_t j = 0; j < W_bgO || j < W_iO; ++j) {
                 //if (i < H_bgO && j < W_bgO) backgroundObjectsDisplay(backgroundObjects[i][j], window, i, j, p.getOffsetX(), p.getOffsetY(), time);
-                if (i < H_iO && j < W_iO) { 
-                    //std::cout << inanimateObjects[i][j]->type << "\n";
+                if (i < H_iO && j < W_iO) { // & inanimateObjects[i][j] != nullptr
+                    //std::cout << i << " " << j << "\n";
                     inanimateObjects[i][j]->display(window, i, j, p.getOffsetX(), p.getOffsetY(), time); 
                     
                 }
-                //std::cout << i << " " << j << " " << H_iO << " " << W_iO << "\n";
+                //std::cout << i << " " << j << "\n";
             }
         }
 
@@ -156,11 +159,11 @@ private:
 
     void readFromFileBackgroundObjects(std::ifstream* fN_bgO_in, char**& backgroundObjects) {
         std::cout << "readFromFileBO\n";
-        *fN_bgO_in >> H_bgO >> W_bgO;
-        std::cout << H_bgO << " " << W_bgO << "\n";
-        allocateCharArr(backgroundObjects, H_bgO, W_bgO);
-        for (size_t i = 0; i < H_bgO; ++i) {
-            for (size_t j = 0; j < W_bgO; ++j) {
+        *fN_bgO_in >> this->H_bgO >> this->W_bgO;
+        std::cout << this->H_bgO << " " << this->W_bgO << "\n";
+        allocateCharArr(backgroundObjects, this->H_bgO, this->W_bgO);
+        for (size_t i = 0; i < this->H_bgO; ++i) {
+            for (size_t j = 0; j < this->W_bgO; ++j) {
                 *fN_bgO_in >> backgroundObjects[i][j];
                 std::cout << backgroundObjects[i][j] << " ";
             }
@@ -170,13 +173,14 @@ private:
     }
     
         void readFromFileInanimateObjects(std::ifstream *fN_iO_in, Object***& inanimateObjects) {
-            std::cout << "readFromFileInanimateObjects\n";
-            *fN_iO_in >> H_iO >> W_iO;
-            std::cout << H_iO << " " << W_iO << "\n";
-            allocateObjectArr(inanimateObjects, H_iO, W_iO);
+            std::cout << "readFromFileInanimateObjects: begin\n";
+            int h, w;
+            *fN_iO_in >> this->H_iO >> this->W_iO;
+            std::cout << this->H_iO << " " << this->W_iO << "\n";
+            allocateObjectArr(inanimateObjects, this->H_iO, this->W_iO);
             char temp;
-            for (size_t i = 0; i < H_iO; ++i) {
-                for (size_t j = 0; j < W_iO; ++j) {
+            for (size_t i = 0; i < this->H_iO; ++i) {
+                for (size_t j = 0; j < this->W_iO; ++j) {
                     *fN_iO_in >> temp;
                     std::cout << temp << " ";
                     inanimateObjects[i][j] = matchingCharAndObject(temp); // в соответствии со списком всех объектов, заполняется массив

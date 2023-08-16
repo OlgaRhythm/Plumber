@@ -32,9 +32,9 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
 
     while (window.isOpen())
     {
-        //float time = clock.getElapsedTime().asMilliseconds() * 3; // фиксируем время с последнего тика 
-        //clock.restart(); //! Надо изменить, а то персонаж двигается рывками
-        float time = 1.0f;
+        float time = clock.getElapsedTime().asMilliseconds() * 3; // фиксируем время с последнего тика 
+        clock.restart(); //! Надо изменить, а то персонаж двигается рывками
+        //float time = 1.0f;
 
         sf::Event event;
         while (window.pollEvent(event))

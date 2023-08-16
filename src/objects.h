@@ -103,6 +103,7 @@ public:
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
+	//void setSprite(sf::Texture& image);
 };
 
 
@@ -114,6 +115,7 @@ public:
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
+	//void setSprite(sf::Texture& image);
 };
 
 /*
