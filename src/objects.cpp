@@ -2,9 +2,6 @@
 
 Solid::Solid(sf::Texture& image) {
 
-	//sf::Texture textureForMainCharacter;
-	//textureForMainCharacter.loadFromFile("img/spriteListObjectsOriginal.png");
-
 	this->texture = image;
 
 	sprite.setTexture(texture);
@@ -37,11 +34,17 @@ sf::Sprite Solid::getSprite() {
 
 
 Pipe::Pipe(sf::Texture& image) {
-	sprite.setTexture(image);
+
+	this->texture = image;
+
+	sprite.setTexture(texture);
+
 	rect = sf::FloatRect(160, 0, 32, 32);
+
+	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
+
 	currentFrame = 0;
 	solid = true;
-
 	type = 2;
 }
 
@@ -57,8 +60,6 @@ void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, 
 	
 	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
 	window.draw(sprite);
-
-	type = 3;
 }
 
 Tap::Tap(sf::Texture& image) {

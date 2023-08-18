@@ -74,6 +74,8 @@ protected:
 	bool destructible = false;
 	bool killing = false;
 
+	sf::Texture texture;
+
 private:
 	//Units
 		// float x; // начальная
@@ -97,8 +99,6 @@ public:
 
 private:
 	sf::Sprite* spritePtr;
-
-	sf::Texture texture;
 	
 };
 
