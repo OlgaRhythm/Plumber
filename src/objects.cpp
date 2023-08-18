@@ -27,7 +27,7 @@ void Solid::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX,
 		rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
 		window.draw(rectangle);
 	
-	sprite.setPosition(j - offsetX, i - offsetY);
+	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
 	window.draw(sprite);
 }
 
