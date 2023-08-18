@@ -1,28 +1,38 @@
 #include "objects.h"
 
 Solid::Solid(sf::Texture& image) {
-	sf::Texture textureForInanimateObjects;
-	textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
-	//sprite.setTexture(image);
-	sprite.setTexture(textureForInanimateObjects);
+
+	//sf::Texture textureForMainCharacter;
+	//textureForMainCharacter.loadFromFile("img/spriteListObjectsOriginal.png");
+
+	this->texture = image;
+
+	sprite.setTexture(texture);
+
 	rect = sf::FloatRect(0, 0, 32, 32);
+	
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
+
 	currentFrame = 0;
 	solid = true;
 	type = 1;
 }
 
 void Solid::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
-	/*
+	
 		//!!! Пластырь
 		int tile = 32;
 		sf::RectangleShape rectangle(sf::Vector2f(tile, tile));
 		rectangle.setFillColor(sf::Color::Green);
 		rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
 		window.draw(rectangle);
-	*/
+	
 	sprite.setPosition(j - offsetX, i - offsetY);
 	window.draw(sprite);
+}
+
+sf::Sprite Solid::getSprite() {
+	return sprite;
 }
 
 

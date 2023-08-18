@@ -29,6 +29,10 @@ class Map {
 public:
     /// заполнение из тестового файла
     Map(char const fN_bgO[17], char const fN_iO[16], char const fN_aO[16]) {
+
+        //текстуры создавать здесь! Они должны жить на протяжении всей программы!
+
+
         std::ifstream fN_bgO_in, fN_iO_in, fN_aO_in;
         fN_bgO_in.open(fN_bgO); //!!! Нужна проверка открытия файла
         fN_iO_in.open(fN_iO);

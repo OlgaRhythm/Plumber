@@ -4,7 +4,7 @@
 
 class Unit {
 public:
-	Unit() {};
+	//Unit() {};
 	virtual ~Unit() {};
 	virtual void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {}; // анимация и вывод на экран
 	sf::Sprite getSprite() {}; // получение спрайта для вывода на дисплей
