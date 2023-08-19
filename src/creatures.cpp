@@ -166,12 +166,23 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 		}
 		if (dx == 0) {
 			if (spriteDirection) {
-				currentFrame = 0; 
-				sprite.setTextureRect(sf::IntRect(10, rect.top, rect.width, rect.height));
+				if (dy > 0 || dy < 0) {
+					sprite.setTextureRect(sf::IntRect(88 * 3 + 88, rect.top, rect.width, rect.height));
+				}
+				else {
+					currentFrame = 0;
+					sprite.setTextureRect(sf::IntRect(10, rect.top, rect.width, rect.height));
+				}
 			}
 			else {
-				currentFrame = 0;
-				sprite.setTextureRect(sf::IntRect(83, rect.top, -rect.width, rect.height));
+				if (dy > 0 || dy < 0) {
+					sprite.setTextureRect(sf::IntRect(88 * 3 + rect.width + 88, rect.top, -rect.width, rect.height));
+				}
+				else {
+					currentFrame = 0;
+					sprite.setTextureRect(sf::IntRect(83, rect.top, -rect.width, rect.height));
+				}
+
 			}
 			 
 		}
