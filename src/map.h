@@ -31,7 +31,9 @@ public:
     Map(char const fN_bgO[17], char const fN_iO[16], char const fN_aO[16]) {
 
         //текстуры создавать здесь! Они должны жить на протяжении всей программы!
-
+        sf::Texture textureForInanimateObjects;
+        textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
+        Object::setCommonTexture(textureForInanimateObjects);
 
         std::ifstream fN_bgO_in, fN_iO_in, fN_aO_in;
         fN_bgO_in.open(fN_bgO); //!!! Нужна проверка открытия файла
