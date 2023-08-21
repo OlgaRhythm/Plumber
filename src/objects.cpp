@@ -3,6 +3,7 @@
 sf::Texture Object::texture;
 sf::Sprite Solid::commonSprite;
 
+
 Solid::Solid(sf::Texture& image) {
 
 	this->texture = image;
@@ -117,6 +118,8 @@ void Teleport::display(sf::RenderWindow& window, size_t i, size_t j, float offse
 
 }
 
+int Coin::coinsAmount = 0;
+
 Coin::Coin(sf::Texture& image) {
 	//this->texture = image;
 	sprite.setTexture(texture);
@@ -136,6 +139,10 @@ void Coin::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, 
 
 void Coin::update(float &time) {
 	//мерцание, меняет currentFrame
+}
+
+void Coin::increaseCoinsAmount() {
+	++coinsAmount;
 }
 
 BoilingWater::BoilingWater(sf::Texture& image) {

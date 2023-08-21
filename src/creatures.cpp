@@ -122,11 +122,14 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 					}
 				}
 				if (TileMap[i][j]->isKilling()) {
-					curHealth -= TileMap[i][j]->getDamageValue();
-					std::cout << curHealth << "\n";
 					if (curHealth <= 0) { 
 						dy = -0.5; 
 						dx = 0.0f;
+						std::cout << "killing\n";
+					}
+					else {
+						curHealth -= TileMap[i][j]->getDamageValue();
+						std::cout << curHealth << "\n";
 					}
 				}
 			}
@@ -152,15 +155,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 		}
 		else {
 			deathAnimation(time);
-			if (y > 500) {
-				dy = 0;
-			}
-			else {
-				y += dy * time;
-				if (dy < 0.5) dy += 0.0005 * time;
-				// std::cout << dy << "\n";
-			}
-			sprite.setPosition(x - offsetX, y - offsetY);
+			std::cout << dy << "\n";
 		}
 	}
 
@@ -214,6 +209,19 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 			std::cout << "Game Over" << "\n";
 			//Plumber::~Plumber();
 		}
+		if (y > 500) {
+			dy = 0;
+			/*
+			* после смерти гг появляется экран поражения
+			* уровень (карта) начинается сначала
+			*/
+		}
+		else {
+			y += dy * time;
+			if (dy < 0.5) dy += 0.0005 * time;
+			// std::cout << dy << "\n";
+		}
+		sprite.setPosition(x - offsetX, y - offsetY);
 	}
 
 	void Plumber::damageAnimation(float time) {

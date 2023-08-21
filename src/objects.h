@@ -202,6 +202,11 @@ public:
 	// сделать переменную для хранения кадра статической
 
 	// void actionOnCollision() - если дотронулся, то увеличение счётчика
+
+	static void increaseCoinsAmount();
+private: 
+
+	static int coinsAmount;
 };
 
 class BoilingWater : public Object { // Observer // B

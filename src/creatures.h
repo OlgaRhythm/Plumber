@@ -66,7 +66,9 @@ public:
 
 	void moveWithKeyboard(); // перемещение при нажатии нужной клавиши
 private: 
+	
 	bool spriteDirection;
+
 };
 
 class Mob : public Creature {
