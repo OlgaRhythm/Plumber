@@ -62,6 +62,8 @@ public:
 
 	void movingAnimation(float); // анимация движения и покоя
 
+	void damageAnimation(float); // анимация урона
+
 	void moveWithKeyboard(); // перемещение при нажатии нужной клавиши
 private: 
 	bool spriteDirection;

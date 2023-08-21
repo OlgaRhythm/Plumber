@@ -66,12 +66,20 @@ public:
 		return solid;
 	}
 
+	bool isKilling() {
+		return killing;
+	}
+
 	void actionOnCollision(){ } // действие на соприкосание с Plumber
 
 	int type = 0;
 
 	static void setCommonTexture(sf::Texture& image) {
 		texture = image;
+	}
+
+	int getDamageValue() {
+		return damage;
 	}
 
 	
@@ -133,6 +141,7 @@ public:
 };
 
 class Destructible : public Object { // D
+public:
 
 	Destructible(sf::Texture& image);
 
@@ -150,6 +159,7 @@ private:
 };
 
 class Moving : public Object { // M <-> // m ^
+public:
 	Moving(sf::Texture& image);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
@@ -165,6 +175,7 @@ private:
 };
 
 class Raft : public Object { // R // Нужен ли?
+public:
 	Raft(sf::Texture& image);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
@@ -172,6 +183,7 @@ class Raft : public Object { // R // Нужен ли?
 
 
 class Teleport : public Object { // E - elevator
+public:
 	Teleport(sf::Texture& image);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
@@ -181,6 +193,7 @@ class Teleport : public Object { // E - elevator
 };
 
 class Coin : public Object { // C
+public:
 	Coin(sf::Texture& image);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
@@ -191,16 +204,18 @@ class Coin : public Object { // C
 	// void actionOnCollision() - если дотронулся, то увеличение счётчика
 };
 
-class BoilingWater : public Object, public IObserver { // Observer // B
+class BoilingWater : public Object { // Observer // B
+public:
 	BoilingWater(sf::Texture& image);
 
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
+	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
-	//void update(float& time); // синхронно мелькает
+	void update(float& time); // синхронно мелькает
 };
 
 class Jet : public Object, public IObserver { // Observer // J
-	Jet(sf::Texture& image);
+public:
+	//Jet(sf::Texture& image);
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -208,7 +223,8 @@ class Jet : public Object, public IObserver { // Observer // J
 };
 
 class Valve : public Object, public Observable { //Observable // V
-	Valve(sf::Texture& image);
+public:
+	//Valve(sf::Texture& image);
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 

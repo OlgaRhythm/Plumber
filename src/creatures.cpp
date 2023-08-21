@@ -105,6 +105,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 	}
 
 	void Plumber::Collision(bool dir, Object*** &TileMap) {
+		// неподвижные объекты
 		for (size_t i = y/32; i < (y+rect.height)/32; ++i) {
 			for (size_t j = x/32; j < (x+rect.width)/32; ++j) {
 				if (TileMap[i][j]->isSolid()) {
@@ -117,33 +118,50 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 					}
 					if (dy < 0 && dir) { // up
 						y = i * 32 + 32;
-						dy = 0; 
+						dy = 0;
 					}
 				}
-				/*if (TileMap[i][j] == 'T') {
-					std::cout << TileMap << " " << TileMap[i][j] << std::endl;
-					TileMap[i][j] = '`';
-					std::cout << "yes" << std::endl;
+				if (TileMap[i][j]->isKilling()) {
+					curHealth -= TileMap[i][j]->getDamageValue();
+					std::cout << curHealth << "\n";
+					if (curHealth <= 0) { 
+						dy = -0.5; 
+						dx = 0.0f;
+					}
 				}
-				*/
 			}
 		}
+		// подвижные объекты
 	}
 
 	void Plumber::update(float time, Object*** &TileMap) {
-		x += dx * time;
-		Collision(false, TileMap);
-		if (!onGround) dy += 0.0005 * time;
-		y += dy * time;
-		onGround = false;
-		Collision(true, TileMap);
-		//std::cout << dx << " " << dy << "\n";
-		if (isLiving()) movingAnimation(time);
-		//if (y > 32 * 35) { y = ground; dy = 0; onGround = true; }
-		else deathAnimation(time);
+		if (isLiving()) {
+			x += dx * time;
+			Collision(false, TileMap);
+			if (!onGround) dy += 0.0005 * time;
+			y += dy * time;
+			onGround = false;
+			Collision(true, TileMap);
+			//std::cout << dx << " " << dy << "\n";
+			if (isLiving()) movingAnimation(time);
+			//if (y > 32 * 35) { y = ground; dy = 0; onGround = true; }
+			else deathAnimation(time);
 
-		sprite.setPosition(x - offsetX, y - offsetY);
-		dx = 0;
+			sprite.setPosition(x - offsetX, y - offsetY);
+			dx = 0;
+		}
+		else {
+			deathAnimation(time);
+			if (y > 500) {
+				dy = 0;
+			}
+			else {
+				y += dy * time;
+				if (dy < 0.5) dy += 0.0005 * time;
+				// std::cout << dy << "\n";
+			}
+			sprite.setPosition(x - offsetX, y - offsetY);
+		}
 	}
 
 	void Plumber::movingAnimation(float time){ 
@@ -190,11 +208,16 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 	}
 
 	void Plumber::deathAnimation(float time) {
+		sprite.setTextureRect(sf::IntRect(88 * 6, rect.top, rect.width, rect.height));
 		currentFrame += 0.005 * time;
 		if (currentFrame > 3) {
 			std::cout << "Game Over" << "\n";
-			Plumber::~Plumber();
+			//Plumber::~Plumber();
 		}
+	}
+
+	void Plumber::damageAnimation(float time) {
+
 	}
 
 	void Plumber::moveWithKeyboard() { // перемещение при нажатии нужной клавиши

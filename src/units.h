@@ -15,6 +15,7 @@ protected:
 	sf::FloatRect rect; //left, top, wigth, height
 	sf::Sprite sprite;
 	float currentFrame;
+	int damage;
 private:
 	// general Tile map 
 	static char** TileMap;

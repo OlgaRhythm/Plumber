@@ -225,10 +225,12 @@ private:
             break;
         }
         case 'T': {
-            Tap* temp_obj = new Tap(textureForInanimateObjects);
-            sf::RenderWindow window1(sf::VideoMode(tile * 2, tile * 2), "test");
-            temp_obj->display(window1, 0, 0, 0.0f, 0.0f, 0.0f);
-            Sleep(5000); ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! не грузит текстуры
+            Object* temp_obj = new Tap(textureForInanimateObjects);
+            return temp_obj;
+            break;
+        }
+        case 'B': {
+            Object* temp_obj = new BoilingWater(textureForInanimateObjects);
             return temp_obj;
             break;
         }

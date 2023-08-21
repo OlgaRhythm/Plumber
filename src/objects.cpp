@@ -147,4 +147,14 @@ BoilingWater::BoilingWater(sf::Texture& image) {
 	solid = true;
 	destructible = false;
 	killing = true;
+	damage = 3;
+}
+
+void BoilingWater::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
+	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
+	window.draw(sprite);
+}
+
+void BoilingWater::update(float& time) {
+	//мерцание, меняет currentFrame
 }
