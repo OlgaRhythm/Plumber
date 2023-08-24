@@ -111,11 +111,6 @@ public:
 	Solid(sf::Texture& image);
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
-	
-	//static void setCommonSprite(sf::Texture); //!!!!
-
-private:
-	static sf::Sprite commonSprite;
 };
 
 // трубы, неизменяемые, solid

@@ -1,13 +1,12 @@
 #include "objects.h"
 
 sf::Texture Object::texture;
-sf::Sprite Solid::commonSprite;
 
 
 Solid::Solid(sf::Texture& image) {
 
-	this->texture = image;
-	//setCommonSprite(image);
+	//this->texture = image;
+	
 	sprite.setTexture(texture);
 
 	rect = sf::FloatRect(0, 0, 32, 32);
@@ -18,6 +17,7 @@ Solid::Solid(sf::Texture& image) {
 	solid = true;
 	type = 1;
 }
+
 
 /*void Solid::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
 	
