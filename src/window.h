@@ -14,8 +14,8 @@ const int tile = 32; // размер плитки
 int temp = 0;
 // добавить 5 названий текстовых файлов с картами (на самом деле файлов 15)
 void showWindow(const char* spriteListObjects, const char* spriteListMainCharacter, const char* spriteListMobs) {
-    sf::RenderWindow window(sf::VideoMode(tile * 20 * 2, tile * 20), "Ordinary Plumber");
-
+    sf::RenderWindow window(sf::VideoMode(tile * 20 * 2, tile * 20), "Ordinary Plumber", sf::Style::Fullscreen);
+    
     const char fN_backgroundObjects[] = "maps/001_bgO.txt";
     const char fN_inanimateObjects[] = "maps/001_iO.txt";
     const char fN_aliveObjects[] = "maps/001_aO.txt";
