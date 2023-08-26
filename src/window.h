@@ -24,7 +24,7 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
 
     //float currentFrame = 0;
     Texture textureForMainCharacter;
-    textureForMainCharacter.loadFromFile("img/spriteListMainCharacterOriginal.png");
+    textureForMainCharacter.loadFromFile(spriteListMainCharacter);
 
     Plumber p(textureForMainCharacter); // создание персонажа
 

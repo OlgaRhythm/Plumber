@@ -95,7 +95,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 		sprite.setTexture(image);
 		x = 100;
 		y = 244;
-		rect = sf::FloatRect(100, 260, 73, 80);
+		rect = sf::FloatRect(0, 0, 105, 128);
 		dx = dy = 0;
 		currentFrame = 0;
 		startHealth = 1;
@@ -160,35 +160,35 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 
 		if (dx < 0) {
 			spriteDirection = false;
-			if (dy > 0 || dy < 0) {
-				sprite.setTextureRect(sf::IntRect(88 * 3 + rect.width + 88, rect.top, -rect.width, rect.height));
+			if (dy > 0 || dy < 0) { // jump
+				sprite.setTextureRect(sf::IntRect(rect.width * 5 + rect.width, rect.top, -128, rect.height));
 			}
-			else sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + rect.width + 88, rect.top, -rect.width, rect.height));
+			else sprite.setTextureRect(sf::IntRect(rect.width * (int(currentFrame) + 1) + rect.width, rect.top, -rect.width, rect.height));
 		}
 		if (dx > 0) {
 			spriteDirection = true;
-			if (dy > 0 || dy < 0) {
-				sprite.setTextureRect(sf::IntRect(88 * 3 + 88, rect.top, rect.width, rect.height));
+			if (dy > 0 || dy < 0) { // jump
+				sprite.setTextureRect(sf::IntRect(rect.width * 5, rect.top, 128, rect.height));
 			}	
-			else sprite.setTextureRect(sf::IntRect(88 * int(currentFrame) + 88, rect.top, rect.width, rect.height));
+			else sprite.setTextureRect(sf::IntRect(rect.width * (int(currentFrame) + 1), rect.top, rect.width, rect.height));
 		}
 		if (dx == 0) {
 			if (spriteDirection) {
 				if (dy > 0 || dy < 0) {
-					sprite.setTextureRect(sf::IntRect(88 * 3 + 88, rect.top, rect.width, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.width * 5 + 2, rect.top, 128, rect.height));
 				}
 				else {
 					currentFrame = 0;
-					sprite.setTextureRect(sf::IntRect(10, rect.top, rect.width, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 				}
 			}
 			else {
 				if (dy > 0 || dy < 0) {
-					sprite.setTextureRect(sf::IntRect(88 * 3 + rect.width + 88, rect.top, -rect.width, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.width * 5 + 2, rect.top, -128, rect.height));
 				}
 				else {
 					currentFrame = 0;
-					sprite.setTextureRect(sf::IntRect(83, rect.top, -rect.width, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.left, rect.top, -rect.width, rect.height));
 				}
 
 			}
