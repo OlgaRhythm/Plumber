@@ -161,34 +161,34 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 		if (dx < 0) {
 			spriteDirection = false;
 			if (dy > 0 || dy < 0) { // jump
-				sprite.setTextureRect(sf::IntRect(rect.width * 5 + rect.width, rect.top, -128, rect.height));
+				sprite.setTextureRect(sf::IntRect(rect.left + rect.width * 5 + rect.width, rect.top, -rect.width, rect.height));
 			}
-			else sprite.setTextureRect(sf::IntRect(rect.width * (int(currentFrame) + 1) + rect.width, rect.top, -rect.width, rect.height));
+			else sprite.setTextureRect(sf::IntRect(rect.left + rect.width * (int(currentFrame) + 1) + rect.width, rect.top, -rect.width, rect.height));
 		}
 		if (dx > 0) {
 			spriteDirection = true;
 			if (dy > 0 || dy < 0) { // jump
-				sprite.setTextureRect(sf::IntRect(rect.width * 5, rect.top, 128, rect.height));
+				sprite.setTextureRect(sf::IntRect(rect.left + rect.width * 5, rect.top, rect.width, rect.height));
 			}	
-			else sprite.setTextureRect(sf::IntRect(rect.width * (int(currentFrame) + 1), rect.top, rect.width, rect.height));
+			else sprite.setTextureRect(sf::IntRect(rect.left + rect.width * (int(currentFrame) + 1), rect.top, rect.width, rect.height));
 		}
 		if (dx == 0) {
 			if (spriteDirection) {
 				if (dy > 0 || dy < 0) {
-					sprite.setTextureRect(sf::IntRect(rect.width * 5 + 2, rect.top, 128, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.left + rect.width * 5, rect.top, rect.width, rect.height));
 				}
 				else {
 					currentFrame = 0;
-					sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.left + rect.left, rect.top, rect.width, rect.height));
 				}
 			}
 			else {
 				if (dy > 0 || dy < 0) {
-					sprite.setTextureRect(sf::IntRect(rect.width * 5 + 2, rect.top, -128, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.left + rect.width * 5 + rect.width, rect.top, -rect.width, rect.height));
 				}
 				else {
 					currentFrame = 0;
-					sprite.setTextureRect(sf::IntRect(rect.left, rect.top, -rect.width, rect.height));
+					sprite.setTextureRect(sf::IntRect(rect.left + rect.width, rect.top, -rect.width, rect.height));
 				}
 
 			}
@@ -198,7 +198,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 	}
 
 	void Plumber::deathAnimation(float time) {
-		sprite.setTextureRect(sf::IntRect(88 * 6, rect.top, rect.width, rect.height));
+		sprite.setTextureRect(sf::IntRect(rect.width * 6, rect.top, rect.width, rect.height));
 		currentFrame += 0.005 * time;
 		if (currentFrame > 3) {
 			//std::cout << "Game Over" << "\n";
