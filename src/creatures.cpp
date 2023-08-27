@@ -106,24 +106,33 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 
 	void Plumber::Collision(bool dir, Object*** &TileMap) {
 		// неподвижные объекты
-		for (size_t i = y/32; i < (y+rect.height)/32; ++i) {
-			for (size_t j = x/32; j < (x+rect.width)/32; ++j) {
+		int tile = 32; // размер плитки
+		if (TileMap[0][0] != nullptr) tile = TileMap[0][0]->getTileSize();
+		for (size_t i = y/ tile; i < (y+rect.height)/ tile; ++i) {
+			for (size_t j = x/ tile; j < (x+rect.width)/ tile; ++j) {
 				if (TileMap[i][j]->isSolid()) {
-					if (dx > 0 && !dir) x = j * 32 - rect.width; // right
-					if (dx < 0 && !dir) x = j * 32 + 32; // left
+					if (dx > 0 && !dir) x = j * tile - rect.width; // right
+					if (dx < 0 && !dir) x = j * tile + tile; // left
 					if (dy > 0 && dir) { // down
-						y = i * 32 - rect.height;
+						y = i * tile - rect.height;
 						dy = 0;
 						onGround = true;
 					}
 					if (dy < 0 && dir) { // up
-						y = i * 32 + 32;
+						y = i * tile + tile;
 						dy = 0;
 					}
 				}
 				if (TileMap[i][j]->isKilling()) {
 					curHealth -= TileMap[i][j]->getDamageValue();
 					std::cout << curHealth << "\n";
+				}
+				if (TileMap[i][j]->isDestructible()) {
+					TileMap[i][j]->collising();
+					Object* ptr = TileMap[i][j];
+					TileMap[i][j] = new Object();
+					delete ptr;
+					std::cout << Coin::getCoinsAmount() << "\n";
 				}
 			}
 		}
@@ -212,10 +221,9 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 			*/
 		}
 		else {
-			std::cout << dy << "\n";
+			// std::cout << dy << "\n";
 			y += dy * time;
 			if (dy < 0.5) dy += 0.0005 * time;
-			// std::cout << dy << "\n";
 		}
 		sprite.setPosition(x - offsetX, y - offsetY);
 	}
@@ -232,7 +240,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 			(*this).moveToTheRight(0.1);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-			(*this).jump(0.5);
+			(*this).jump(0.6);
 		}
 	}
 

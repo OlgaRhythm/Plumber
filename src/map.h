@@ -234,6 +234,10 @@ private:
             return temp_obj;
             break;
         }
+        case 'C': {
+            Object* temp_obj = new Coin(textureForInanimateObjects);
+            return temp_obj;
+        }
         case '`': {
             Object* temp_obj = new Object();
             return temp_obj; 

@@ -9,7 +9,7 @@ Solid::Solid(sf::Texture& image) {
 	
 	sprite.setTexture(texture);
 
-	rect = sf::FloatRect(0, 0, 32, 32);
+	rect = sf::FloatRect(0, 0, tile, tile);
 	
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
@@ -40,7 +40,7 @@ Pipe::Pipe(sf::Texture& image) {
 
 	sprite.setTexture(texture);
 
-	rect = sf::FloatRect(160, 0, 32, 32);
+	rect = sf::FloatRect(tile * 5, 0, tile, tile);
 
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
@@ -66,7 +66,7 @@ Pipe::Pipe(sf::Texture& image) {
 Tap::Tap(sf::Texture& image) {
 	//this->texture = image;
 	sprite.setTexture(texture);
-	rect = sf::FloatRect(32, 32, 32, 32);
+	rect = sf::FloatRect(tile, tile, tile, tile);
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
 	currentFrame = 0;
@@ -123,11 +123,11 @@ int Coin::coinsAmount = 0;
 Coin::Coin(sf::Texture& image) {
 	//this->texture = image;
 	sprite.setTexture(texture);
-	rect = sf::FloatRect(256, 0, 32, 32);
+	rect = sf::FloatRect(tile * 8, 0, tile, tile);
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
 	currentFrame = 0;
-	solid = true;
+	solid = false;
 	destructible = true;
 }
 
@@ -145,9 +145,22 @@ void Coin::increaseCoinsAmount() {
 	++coinsAmount;
 }
 
+int Coin::getCoinsAmount() {
+	return coinsAmount;
+}
+
+void Coin::collising() {
+	increaseCoinsAmount();
+	destructing();
+}
+
+void Coin::destructing() {
+
+}
+
 BoilingWater::BoilingWater(sf::Texture& image) {
 	sprite.setTexture(texture);
-	rect = sf::FloatRect(96, 0, 32, 32);
+	rect = sf::FloatRect(tile * 3, 0, tile, tile);
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
 	currentFrame = 0;

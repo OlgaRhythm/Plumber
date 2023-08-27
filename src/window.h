@@ -32,7 +32,7 @@ void showWindow(const char* spriteListObjects, const char* spriteListMainCharact
 
     while (window.isOpen())
     {
-        float time = (clock.getElapsedTime().asMilliseconds() + 0.25f) * 3; // фиксируем время с последнего тика 
+        float time = (clock.getElapsedTime().asMilliseconds() + 0.50f) * 3; // фиксируем время с последнего тика 
         clock.restart(); //! Надо изменить, а то персонаж двигается рывками
         //float time = 1.0f;
 

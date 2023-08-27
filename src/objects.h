@@ -70,6 +70,10 @@ public:
 		return killing;
 	}
 
+	bool isDestructible() {
+		return destructible;
+	}
+
 	void actionOnCollision(){ } // действие на соприкосание с Plumber
 
 	int type = 0;
@@ -82,10 +86,16 @@ public:
 		return damage;
 	}
 
+	int getTileSize() {
+		return tile;
+	}
 	
+	virtual void collising() { } // для взаимодействующих объектов
+
+	void destructing() { } // для разрушаемых объектов (Coin, Destructible)
 
 protected:	
-	int tile = 32;
+	int tile = 64;
 
 	bool solid = false;
 	bool destructible = false;
@@ -198,7 +208,14 @@ public:
 
 	// void actionOnCollision() - если дотронулся, то увеличение счётчика
 
-	static void increaseCoinsAmount();
+	void collising(); // действие при столкновении
+
+	static void increaseCoinsAmount(); // увеличение счётчика монет
+	
+	static int getCoinsAmount(); // получение значения количества монет
+
+	void destructing(); // действие перед разрушением
+
 private: 
 
 	static int coinsAmount;
