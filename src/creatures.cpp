@@ -213,7 +213,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 			//std::cout << "Game Over" << "\n";
 			//Plumber::~Plumber();
 		}
-		if (y > 700) {
+		if (y > 1200) {
 			dy = 0;
 			/*
 			* после смерти гг появляется экран поражения
