@@ -94,6 +94,14 @@ public:
 
 	void destructing() { } // для разрушаемых объектов (Coin, Destructible)
 
+	void setCurrentFrame(float frame) {
+		currentFrame = frame;
+	}
+
+	float getCurrentFrame() {
+		return currentFrame;
+	}
+
 protected:	
 	int tile = 64;
 
@@ -131,7 +139,9 @@ public:
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
-	//!!! меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
+	void setRotation(int); // меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
+	// float currentFrame отвечает за вид
+	
 };
 
 

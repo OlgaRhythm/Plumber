@@ -47,6 +47,8 @@ Pipe::Pipe(sf::Texture& image) {
 	currentFrame = 0;
 	solid = true;
 	type = 2;
+
+	currentFrame = 0.0f;
 }
 
 void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
@@ -58,10 +60,18 @@ void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, 
 	rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
 	window.draw(rectangle);
 	*/
-	
+	if ((int)currentFrame == 0) setRotation((int)currentFrame);
+
 	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
 	window.draw(sprite);
 }
+
+void Pipe::setRotation(int type) {
+	rect = sf::FloatRect(tile*type, tile, tile, tile);
+	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
+	return;
+}
+
 
 Tap::Tap(sf::Texture& image) {
 	//this->texture = image;

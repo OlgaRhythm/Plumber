@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include <vector>
 
 /*//////////////////////////////////////////!!!!!!!
 Карты должны будут изначально храниться в текстовом файле. (в моём случае 5 карт)
@@ -95,11 +96,9 @@ public:
             for (size_t j = 0; j < W_bgO || j < W_iO; ++j) {
                 //if (i < H_bgO && j < W_bgO) backgroundObjectsDisplay(backgroundObjects[i][j], window, i, j, p.getOffsetX(), p.getOffsetY(), time);
                 if (i < H_iO && j < W_iO) { // & inanimateObjects[i][j] != nullptr
-                    //std::cout << i << " " << j << "\n";
                     inanimateObjects[i][j]->display(window, i, j, p.getOffsetX(), p.getOffsetY(), time); 
                     
                 }
-                //std::cout << i << " " << j << "\n";
             }
         }
 
@@ -184,14 +183,37 @@ private:
             *fN_iO_in >> this->H_iO >> this->W_iO;
             std::cout << this->H_iO << " " << this->W_iO << "\n";
             allocateObjectArr(inanimateObjects, this->H_iO, this->W_iO);
-            char temp;
+            std::vector <std::vector<char> > temp(H_iO, std::vector<char>(W_iO, 0));
+            std::vector <std::vector<int>> tempListOfPipes(0, std::vector<int>(2, 0));
+            int sizeOftempListOfPipes = 0;
             for (size_t i = 0; i < this->H_iO; ++i) {
                 for (size_t j = 0; j < this->W_iO; ++j) {
-                    *fN_iO_in >> temp;
-                    std::cout << temp << " ";
-                    inanimateObjects[i][j] = matchingCharAndObject(temp); // в соответствии со списком всех объектов, заполняется массив
+                    *fN_iO_in >> temp[i][j];
+                    std::cout << temp[i][j] << " ";
+                    inanimateObjects[i][j] = matchingCharAndObject(temp[i][j]); // в соответствии со списком всех объектов, заполняется массив
+                    if (temp[i][j] == 'P') {
+                        tempListOfPipes.push_back(std::vector<int>());
+                        tempListOfPipes[sizeOftempListOfPipes][0] = i;
+                        tempListOfPipes[sizeOftempListOfPipes][1] = j;
+                        ++sizeOftempListOfPipes;
+                    }
                 }
                 std::cout << "\n";
+            }
+
+            // выставить нужную ротацию для Pipe
+            for (size_t i = 0; i < sizeOftempListOfPipes; ++i) {
+                size_t i_t = tempListOfPipes[i][0];
+                size_t j_t = tempListOfPipes[i][1];
+                bool left(false), top(false), right(false), bottom(false);
+                if ((j_t - 1 >= 0 && (temp[i_t][j_t - 1] == 'P' || temp[i_t][j_t - 1] == 'T')) || (j_t - 1 < 0)) left = true;
+                if ((i_t - 1 >= 0 && (temp[i_t - 1][j_t] == 'P' || temp[i_t - 1][j_t] == 'T')) || (i_t - 1 < 0)) top = true;
+                if ((j_t + 1 < W_iO && (temp[i_t][j_t + 1] == 'P' || temp[i_t][j_t + 1] == 'T')) || (j_t + 1 >= W_iO)) right = true;
+                if ((i_t + 1 < H_iO && (temp[i_t + 1][j_t] == 'P' || temp[i_t + 1][j_t] == 'T')) || (i_t + 1 >= H_iO)) bottom = true;
+                
+                
+                
+                // inanimateObjects[i][j] setCurrentFrame();
             }
             std::cout << "readFromFileInanimateObjects " << inanimateObjects << "\n";
         }
