@@ -32,7 +32,7 @@ public:
 
         //текстуры создавать здесь! ќни должны жить на прот€жении всей программы!
         sf::Texture textureForInanimateObjects;
-        textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
+        textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal1.png");
         Object::setCommonTexture(textureForInanimateObjects);
 
         std::ifstream fN_bgO_in, fN_iO_in, fN_aO_in;

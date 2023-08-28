@@ -40,7 +40,7 @@ Pipe::Pipe(sf::Texture& image) {
 
 	sprite.setTexture(texture);
 
-	rect = sf::FloatRect(tile * 5, 0, tile, tile);
+	rect = sf::FloatRect(0, tile, tile, tile);
 
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
@@ -49,7 +49,7 @@ Pipe::Pipe(sf::Texture& image) {
 	type = 2;
 }
 
-/*void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
+void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
 	/*
 	//!!! Пластырь
 	int tile = 32;
@@ -58,15 +58,15 @@ Pipe::Pipe(sf::Texture& image) {
 	rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
 	window.draw(rectangle);
 	*/
-	/*
+	
 	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
 	window.draw(sprite);
-}*/
+}
 
 Tap::Tap(sf::Texture& image) {
 	//this->texture = image;
 	sprite.setTexture(texture);
-	rect = sf::FloatRect(tile, tile, tile, tile);
+	rect = sf::FloatRect(0, tile*2, tile, tile);
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 
 	currentFrame = 0;

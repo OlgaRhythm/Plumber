@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	const char* spriteListObjects("img/spriteListObjectsOriginal.png");
+	const char* spriteListObjects("img/spriteListObjectsOriginal1.png");
 	const char* spriteListMainCharacter("img/spriteListMainCharacterBlue.png");
 	const char* spriteListMobs("img/spriteListOriginalMobs.png");
 	showWindow(spriteListObjects, spriteListMainCharacter, spriteListMobs);

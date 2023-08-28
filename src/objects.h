@@ -129,7 +129,7 @@ class Pipe : public Object { // P
 public:
 	Pipe(sf::Texture& image);
 
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
+	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
 	//!!! меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
 };
