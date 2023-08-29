@@ -184,7 +184,7 @@ private:
             std::cout << this->H_iO << " " << this->W_iO << "\n";
             allocateObjectArr(inanimateObjects, this->H_iO, this->W_iO);
             std::vector <std::vector<char> > temp(H_iO, std::vector<char>(W_iO, 0));
-            std::vector <std::vector<int>> tempListOfPipes(0, std::vector<int>(2, 0));
+            std::vector <std::vector<int> > tempListOfPipes(0, std::vector<int>(2, 0));
             int sizeOftempListOfPipes = 0;
             for (size_t i = 0; i < this->H_iO; ++i) {
                 for (size_t j = 0; j < this->W_iO; ++j) {
@@ -193,8 +193,8 @@ private:
                     inanimateObjects[i][j] = matchingCharAndObject(temp[i][j]); // в соответствии со списком всех объектов, заполняется массив
                     if (temp[i][j] == 'P') {
                         tempListOfPipes.push_back(std::vector<int>());
-                        tempListOfPipes[sizeOftempListOfPipes][0] = i;
-                        tempListOfPipes[sizeOftempListOfPipes][1] = j;
+                        tempListOfPipes[sizeOftempListOfPipes].push_back(i);
+                        tempListOfPipes[sizeOftempListOfPipes].push_back(j);
                         ++sizeOftempListOfPipes;
                     }
                 }
@@ -211,9 +211,45 @@ private:
                 if ((j_t + 1 < W_iO && (temp[i_t][j_t + 1] == 'P' || temp[i_t][j_t + 1] == 'T')) || (j_t + 1 >= W_iO)) right = true;
                 if ((i_t + 1 < H_iO && (temp[i_t + 1][j_t] == 'P' || temp[i_t + 1][j_t] == 'T')) || (i_t + 1 >= H_iO)) bottom = true;
                 
-                
-                
-                // inanimateObjects[i][j] setCurrentFrame();
+                if (left && top && right && bottom) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(10.0f);
+                }
+                else if (!left && top && right && bottom) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(9.0f);
+                }
+                else if (left && top && right && !bottom) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(8.0f);
+                }
+                else if (left && top && !right && bottom) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(7.0f);
+                }
+                else if (left && !top && right && bottom) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(6.0f);
+                }
+                else if (!left && !top && ((right && bottom)||(right && temp[i_t+1][j_t]!='`')||(bottom && temp[i_t][j_t+1]!='`'))) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(5.0f);
+                }
+                else if (!left && !bottom && ((top && right) || (top && temp[i_t][j_t+1] != '`') || (right && temp[i_t-1][j_t] != '`'))) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(4.0f);
+                }
+                else if (!right && !bottom && ((left && top) || (left && temp[i_t-1][j_t] != '`') || (top && temp[i_t][j_t-1] != '`'))) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(3.0f);
+                }
+                else if (!top && !right && ((left && bottom) || (left && temp[i_t+1][j_t] != '`') || (bottom && temp[i_t][j_t-1] != '`'))) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(2.0f);
+                }
+                else if (!left && !right && ((top && bottom) || (top) || (bottom)) ) {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(1.0f);
+                }
+                else {
+                    inanimateObjects[i_t][j_t]->setCurrentFrame(0.0f);
+                }
+
+                // нужная ротация для Tap
+                if (temp[i_t][j_t - 1] == 'T') inanimateObjects[i_t][j_t - 1]->setCurrentFrame(2.0f);
+                if (temp[i_t - 1][j_t] == 'T') inanimateObjects[i_t - 1][j_t]->setCurrentFrame(3.0f);
+                if (temp[i_t][j_t + 1] == 'T') inanimateObjects[i_t][j_t + 1]->setCurrentFrame(0.0f);
+                if (temp[i_t + 1][j_t] == 'T') inanimateObjects[i_t + 1][j_t]->setCurrentFrame(1.0f);
             }
             std::cout << "readFromFileInanimateObjects " << inanimateObjects << "\n";
         }

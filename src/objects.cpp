@@ -51,23 +51,14 @@ Pipe::Pipe(sf::Texture& image) {
 	currentFrame = 0.0f;
 }
 
-void Pipe::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
-	/*
-	//!!! Пластырь
-	int tile = 32;
-	sf::RectangleShape rectangle(sf::Vector2f(tile, tile));
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(rectangle);
-	*/
-	if ((int)currentFrame == 0) setRotation((int)currentFrame);
 
-	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(sprite);
-}
 
-void Pipe::setRotation(int type) {
-	rect = sf::FloatRect(tile*type, tile, tile, tile);
+void Pipe::setCurrentFrame(float frame) {
+	currentFrame = frame;
+	int tempFrame = (int) frame;
+
+	rect = sf::FloatRect(tile * tempFrame, tile, tile, tile);
+
 	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
 	return;
 }
@@ -84,21 +75,16 @@ Tap::Tap(sf::Texture& image) {
 	type = 3;
 
 }
-/*
-void Tap::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
-	/*
-	//!!! Пластырь
-	int tile = 32;
-	sf::RectangleShape rectangle(sf::Vector2f(tile, tile));
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(rectangle);
-	*/
-/*
-	sprite.setPosition(j * tile - offsetX, i * tile - offsetY);
-	window.draw(sprite);
+
+void Tap::setCurrentFrame(float frame) {
+	currentFrame = frame;
+	int tempFrame = (int)frame;
+
+	rect = sf::FloatRect(tile * tempFrame, tile * 2, tile, tile);
+
+	sprite.setTextureRect(sf::IntRect(rect.left, rect.top, rect.width, rect.height));
+	return;
 }
-*/
 
 void Destructible::display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time) {
 	if (destructed) {

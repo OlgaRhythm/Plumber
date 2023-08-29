@@ -94,7 +94,7 @@ public:
 
 	void destructing() { } // дл€ разрушаемых объектов (Coin, Destructible)
 
-	void setCurrentFrame(float frame) {
+	virtual void setCurrentFrame(float frame) {
 		currentFrame = frame;
 	}
 
@@ -137,9 +137,9 @@ class Pipe : public Object { // P
 public:
 	Pipe(sf::Texture& image);
 
-	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимаци€
+	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимаци€
 
-	void setRotation(int); // мен€ет внешний вид в зависимости от положени€ по отношению к другим таким объектам (изгибы, соединени€)
+	void setCurrentFrame(float); // мен€ет внешний вид в зависимости от положени€ по отношению к другим таким объектам (изгибы, соединени€)
 	// float currentFrame отвечает за вид
 	
 };
@@ -153,6 +153,7 @@ public:
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимаци€
 
+	void setCurrentFrame(float); // мен€ет внешний вид в зависимости от положени€ по отношению к другим таким объектам (изгибы, соединени€)
 };
 
 class Destructible : public Object { // D
