@@ -108,6 +108,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 		// неподвижные объекты
 		int tile = 32; // размер плитки
 		if (TileMap[0][0] != nullptr) tile = TileMap[0][0]->getTileSize();
+		float old_dy = dy, old_dx = dx;
 		for (size_t i = y/ tile; i < (y+rect.height)/ tile; ++i) {
 			for (size_t j = x/ tile; j < (x+rect.width)/ tile; ++j) {
 				if (TileMap[i][j]->isSolid()) {
@@ -128,11 +129,12 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 					std::cout << curHealth << "\n";
 				}
 				if (TileMap[i][j]->isDestructible()) {
-					TileMap[i][j]->collising();
-					Object* ptr = TileMap[i][j];
-					TileMap[i][j] = new Object();
-					delete ptr;
-					std::cout << Coin::getCoinsAmount() << "\n";
+					if (TileMap[i][j]->actionOnCollision(old_dx, old_dy, x, y, spriteDirection)) {
+						Object* ptr = TileMap[i][j];
+						TileMap[i][j] = new Object();
+						delete ptr;
+						std::cout << Coin::getCoinsAmount() << "\n";
+					}
 				}
 			}
 		}

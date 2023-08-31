@@ -190,7 +190,7 @@ private:
                 for (size_t j = 0; j < this->W_iO; ++j) {
                     *fN_iO_in >> temp[i][j];
                     std::cout << temp[i][j] << " ";
-                    inanimateObjects[i][j] = matchingCharAndObject(temp[i][j]); // в соответствии со списком всех объектов, заполняется массив
+                    inanimateObjects[i][j] = matchingCharAndObject(temp[i][j], i, j); // в соответствии со списком всех объектов, заполняется массив
                     if (temp[i][j] == 'P') {
                         tempListOfPipes.push_back(std::vector<int>());
                         tempListOfPipes[sizeOftempListOfPipes].push_back(i);
@@ -265,7 +265,7 @@ private:
         window.draw(rectangle);
     }
 
-    Object* matchingCharAndObject(char symbol) {
+    Object* matchingCharAndObject(char symbol, int y, int x) {
         // устанавливаем текстуры для неживых объектов
         sf::Texture textureForInanimateObjects;
         textureForInanimateObjects.loadFromFile("img/spriteListObjectsOriginal.png");
@@ -273,27 +273,31 @@ private:
         switch (symbol)
         {
         case 'S': {
-            Object* temp_obj = new Solid(textureForInanimateObjects);
+            Object* temp_obj = new Solid();
             return temp_obj;
             break;
         }
         case 'P': {
-            Object* temp_obj = new Pipe(textureForInanimateObjects);
+            Object* temp_obj = new Pipe();
             return temp_obj;
             break;
         }
         case 'T': {
-            Object* temp_obj = new Tap(textureForInanimateObjects);
+            Object* temp_obj = new Tap();
             return temp_obj;
             break;
         }
         case 'B': {
-            Object* temp_obj = new BoilingWater(textureForInanimateObjects);
+            Object* temp_obj = new BoilingWater();
             return temp_obj;
             break;
         }
         case 'C': {
-            Object* temp_obj = new Coin(textureForInanimateObjects);
+            Object* temp_obj = new Coin();
+            return temp_obj;
+        }
+        case 'D': {
+            Object* temp_obj = new Destructible((float)x, (float)y);
             return temp_obj;
         }
         case '`': {

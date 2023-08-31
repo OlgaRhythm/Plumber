@@ -74,8 +74,6 @@ public:
 		return destructible;
 	}
 
-	void actionOnCollision(){ } // действие на соприкосание с Plumber
-
 	int type = 0;
 
 	static void setCommonTexture(sf::Texture& image) {
@@ -90,7 +88,7 @@ public:
 		return tile;
 	}
 	
-	virtual void collising() { } // для взаимодействующих объектов
+	virtual bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir) { return false; } // для взаимодействующих объектов
 
 	void destructing() { } // для разрушаемых объектов (Coin, Destructible)
 
@@ -126,7 +124,7 @@ private:
 
 class Solid : public Object { // S
 public:
-	Solid(sf::Texture& image);
+	Solid();
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 };
@@ -135,7 +133,7 @@ public:
 
 class Pipe : public Object { // P
 public:
-	Pipe(sf::Texture& image);
+	Pipe();
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -149,7 +147,7 @@ public:
 
 class Tap : public Object { // T
 public:
-	Tap(sf::Texture& image);
+	Tap();
 
 	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -159,18 +157,11 @@ public:
 class Destructible : public Object { // D
 public:
 
-	Destructible(sf::Texture& image);
+	Destructible(float x, float y);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
-	void destructAnimation(); // анимация после касания гг снизу
-
-	void setDestructed(); // доступна для Plumper
-
-	// void actionOnCollision() - если пригнул снизу, то разрушение
-
-private:
-	bool destructed = false; // когда Plumper в прыжке дотронулся снизу - активируется
+	bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir); // - если пригнул снизу, то разрушение
 
 };
 
@@ -210,7 +201,7 @@ public:
 
 class Coin : public Object { // C
 public:
-	Coin(sf::Texture& image);
+	Coin();
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -219,7 +210,7 @@ public:
 
 	// void actionOnCollision() - если дотронулся, то увеличение счётчика
 
-	void collising(); // действие при столкновении
+	bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir); // действие при столкновении
 
 	static void increaseCoinsAmount(); // увеличение счётчика монет
 	
@@ -234,7 +225,7 @@ private:
 
 class BoilingWater : public Object { // Observer // B
 public:
-	BoilingWater(sf::Texture& image);
+	BoilingWater();
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
