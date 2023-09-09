@@ -119,26 +119,11 @@ public:
     char** backgroundObjects = nullptr; // только объекты фона
     //указатель на массив указателей на массивы указателей на объект
     Object*** inanimateObjects = nullptr; // только неживые объекты (двумерный массив, потому что коллизия по координатам)
-    Creature** aliveObjects = nullptr;  // только живые существа (одномерный массив, координаты в объектах)
+    Creature** aliveObjects = nullptr;  // только живые существа (в т.ч. Valve, Raft) (одномерный массив, координаты в объектах)
 
 private:
 
     Map() {} // приватный конструктор по умолчанию, чтобы нельзя было вызвать извне
-
-    // выделение памяти для двумерных массивов заданных размеров
-/*    template <class Type>
-    void allocateCharArr(Type**& arr, int _H, int _W) {
-        if (_H != 0 && _W != 0) {
-            Type** arr_tmp = new Type* [_H];
-            for (size_t i = 0; i < _H; ++i) {
-                arr_tmp[i] = new Type[_W];
-            }
-            arr = arr_tmp;
-        }
-        else arr = nullptr;
-    }
-    */
-    // выделение памяти для двумерных массивов заданных размеров
 
     void allocateCharArr(char**& arr, int _H, int _W) {
         if (_H != 0 && _W != 0) {

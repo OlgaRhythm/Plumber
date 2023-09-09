@@ -4,41 +4,12 @@
 
 // Creature
 
-void Creature::Collision(bool dir, Object*** TileMap) {
-/*	for (size_t i = y / 32; i < (y + rect.height) / 32; ++i) {
-		for (size_t j = x / 32; j < (x + rect.width) / 32; ++j) {
-			if (TileMap[i][j] != '`') {
-				if (dx > 0 && !dir) x = j * 32 - rect.width; // right
-				if (dx < 0 && !dir) x = j * 32 + 32; // left
-				if (dy > 0 && dir) { // down
-					y = i * 32 - rect.height;
-					dy = 0;
-					onGround = true;
-				}
-				if (dy < 0 && dir) { // up
-					y = i * 32 + 32;
-					dy = 0;
-				}
-			}
-		}
-	}*/
+	void Creature::Collision(bool dir, Object*** TileMap) {
+
 }
 
 	void Creature::update(float time, Object*** TileMap) {
-		/*x += dx * time;
-		Collision(false, TileMap);
-		if (!onGround) dy += 0.0005 * time;
-		y += dy * time;
-		onGround = false;
-		Collision(true, TileMap);
 
-		if (isLiving()) movingAnimation();
-		//if (y > 32 * 35) { y = ground; dy = 0; onGround = true; }
-		else deathAnimation(time);
-
-		sprite.setPosition(x - offsetX, y - offsetY);
-		dx = 0;
-		*/
 	}
 
 	bool Creature::isLiving() {
@@ -85,10 +56,7 @@ void Creature::Collision(bool dir, Object*** TileMap) {
 	sf::Sprite Creature::getSprite() {
 		return sprite;
 	}
-	
-	//void Creature::display() {
-//
-	//}
+
 
 // Plumber
 	Plumber::Plumber(sf::Texture &image) {

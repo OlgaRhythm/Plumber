@@ -125,8 +125,6 @@ private:
 class Solid : public Object { // S
 public:
 	Solid();
-
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 };
 
 // трубы, неизменяемые, solid
@@ -134,8 +132,6 @@ public:
 class Pipe : public Object { // P
 public:
 	Pipe();
-
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
 	void setCurrentFrame(float); // меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
 	// float currentFrame отвечает за вид
@@ -148,8 +144,6 @@ public:
 class Tap : public Object { // T
 public:
 	Tap();
-
-	//void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
 	void setCurrentFrame(float); // меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
 };
@@ -208,8 +202,6 @@ public:
 	void update(float &time); // мерцание СИНХРОННОЕ!
 	// сделать переменную для хранения кадра статической
 
-	// void actionOnCollision() - если дотронулся, то увеличение счётчика
-
 	bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir); // действие при столкновении
 
 	static void increaseCoinsAmount(); // увеличение счётчика монет
@@ -230,6 +222,16 @@ public:
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
 	void update(float& time); // синхронно мелькает
+
+	// void setVisible(bool);
+	/*
+	* объекты хранятся в неживом массиве
+	* триггер -- это Valve нужного порядка, который хранится в списке с подвижными объектами
+	* В Valve хранится верхний верхний блок потока воды из трубы
+	* При пересечении спрайтов гг и Valve срабатывает метод changeVisible(false) на блоке потока воды.
+	* Эта вода начинает цепную реакцию по изменению видимости, причём, по одной строчке за 1 кадр
+	* 
+	*/
 };
 
 class Jet : public Object, public IObserver { // Observer // J
