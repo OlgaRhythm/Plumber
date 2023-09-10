@@ -1,5 +1,5 @@
-#include "units.h"
-#include "creatures.h"
+//#include "units.h"
+#include "objects.h"
 #include <iostream>
 
 // Creature
@@ -57,6 +57,55 @@
 		return sprite;
 	}
 
+	float Creature::getDX() {
+		return this->dx;
+	}
+	float Creature::getDY() {
+		return this->dy;
+	}
+	float Creature::getX() {
+		return this->x;
+	}
+	float Creature::getY() {
+		return this->y;
+	}
+
+	void Creature::setDX(float new_dx) {
+		this->dx = new_dx;
+	}
+	void Creature::setDY(float new_dy) {
+		this->dy = new_dy;
+	}
+	void Creature::setX(float new_x) {
+		this->x = new_x;
+	}
+	void Creature::setY(float new_y) {
+		this->y = new_y;
+	}
+
+	bool Creature::isOnGround() {
+		return this->onGround;
+	}
+
+	void Creature::setOnGround(bool value) {
+		onGround = value;
+	}
+
+	sf::FloatRect Creature::getRect() {
+		return this->rect;
+	}
+
+	int Creature::getCurHealth() {
+		return curHealth;
+	}
+
+	void Creature::setCurHealth(int newCurHealth) {
+		this->curHealth = newCurHealth;
+	}
+
+	void Creature::decreaseCurHealth(int damage) {
+		curHealth -= damage;
+	}
 
 // Plumber
 	Plumber::Plumber(sf::Texture &image) {
@@ -79,33 +128,23 @@
 		float old_dy = dy, old_dx = dx;
 		for (size_t i = y/ tile; i < (y+rect.height)/ tile; ++i) {
 			for (size_t j = x/ tile; j < (x+rect.width)/ tile; ++j) {
-				if (TileMap[i][j]->isSolid()) {
-					if (dx > 0 && !dir) x = j * tile - rect.width; // right
-					if (dx < 0 && !dir) x = j * tile + tile; // left
-					if (dy > 0 && dir) { // down
-						y = i * tile - rect.height;
-						dy = 0;
-						onGround = true;
-					}
-					if (dy < 0 && dir) { // up
-						y = i * tile + tile;
-						dy = 0;
-					}
-				}
-				if (TileMap[i][j]->isKilling()) {
-					curHealth -= TileMap[i][j]->getDamageValue();
-					std::cout << curHealth << "\n";
-				}
+				
+				TileMap[i][j]->actionOnCollision(this, dir);
+
+				/*
 				if (TileMap[i][j]->isDestructible()) {
 					if (TileMap[i][j]->actionOnCollision(old_dx, old_dy, x, y, spriteDirection)) {
-						Object* ptr = TileMap[i][j];
+						Object* ptr = TileMap[i][j]; 
 						TileMap[i][j] = new Object();
 						delete ptr;
 						std::cout << Coin::getCoinsAmount() << "\n";
 					}
 				}
+
+				*/
 			}
 		}
+
 		if (curHealth <= 0) {
 			dy = -0.5;
 			dx = 0.0f;
@@ -213,6 +252,7 @@
 			(*this).jump(0.6);
 		}
 	}
+
 
 /*
 class Mob : public Creature {

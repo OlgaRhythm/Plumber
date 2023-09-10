@@ -258,27 +258,27 @@ private:
         switch (symbol)
         {
         case 'S': {
-            Object* temp_obj = new Solid();
+            Object* temp_obj = new Solid((float)x, (float)y);
             return temp_obj;
             break;
         }
         case 'P': {
-            Object* temp_obj = new Pipe();
+            Object* temp_obj = new Pipe((float)x, (float)y);
             return temp_obj;
             break;
         }
         case 'T': {
-            Object* temp_obj = new Tap();
+            Object* temp_obj = new Tap((float)x, (float)y);
             return temp_obj;
             break;
         }
         case 'B': {
-            Object* temp_obj = new BoilingWater();
+            Object* temp_obj = new BoilingWater((float)x, (float)y);
             return temp_obj;
             break;
         }
         case 'C': {
-            Object* temp_obj = new Coin();
+            Object* temp_obj = new Coin((float)x, (float)y);
             return temp_obj;
         }
         case 'D': {

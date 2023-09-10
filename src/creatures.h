@@ -1,17 +1,8 @@
 #pragma once
-
 #include "units.h"
-#include "objects.h"
 
-/*class Visitor {
-public:
-	void visit() {}
-};
+class Object;
 
-class DeathAnimation : public Visitor {
-	void visit(Plumber* ptr) {}
-};
-*/
 
 class Creature : public Unit { // живые существа
 public:
@@ -40,7 +31,28 @@ public:
 
 	sf::Sprite getSprite();
 
-	//void display();
+	float getDX();
+	float getDY();
+	float getX();
+	float getY();
+
+	void setDX(float);
+	void setDY(float);
+	void setX(float);
+	void setY(float);
+
+	bool isOnGround();
+
+	void setOnGround(bool);
+
+	sf::FloatRect getRect();
+
+	int getCurHealth();
+
+	void setCurHealth(int);
+
+	void decreaseCurHealth(int);
+
 protected:
 	int curHealth;
 	int startHealth;

@@ -1,43 +1,6 @@
 #pragma once
-#include "units.h"
+#include "creatures.h"
 #include <iostream>
-
-//// паттерн Наблюдатель (примитивный)
-class IObserver {
-public:
-	virtual void act() = 0;
-};
-
-class Observable {
-public:
-	Observable() : list(nullptr), size(0) {}
-
-	Observable(IObserver* obs) : list(new IObserver* [1]), size(1) {
-		list[0] = obs;
-	}
-
-	virtual ~Observable() {
-		delete[] list;
-		list = nullptr;
-	}
-	void addObserver(IObserver* obs) {
-		++size;
-	}
-
-	void removeObserver(IObserver* obs) {
-		--size;
-	}
-
-	void notifyObservers() {
-		for (size_t i = 0; i < size; ++i) list[i]->act();
-	}
-
-private:
-	IObserver** list;
-	int size;
-};
-
-
 
 // Object
 
@@ -66,7 +29,7 @@ public:
 		return solid;
 	}
 
-	bool isKilling() {
+	bool isKilling() { // delete it?
 		return killing;
 	}
 
@@ -88,7 +51,28 @@ public:
 		return tile;
 	}
 	
-	virtual bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir) { return false; } // для взаимодействующих объектов
+	virtual bool actionOnCollision(Plumber* pl, bool& p_dir) { 
+		if (this->isSolid()) {
+			if (pl->getDX() > 0 && !p_dir) pl->setX(this->x * tile - pl->getRect().width); // right
+			if (pl->getDX() < 0 && !p_dir) pl->setX(this->x * tile + tile); // left
+			if (pl->getDY() > 0 && p_dir) { // down
+				pl->setY(this->y * tile - pl->getRect().height);
+				pl->setDY(0);
+				pl->setOnGround(true);
+			}
+			if (pl->getDY() < 0 && p_dir) { // up
+				pl->setY(this->y * tile + tile);
+				pl->setDY(0);
+			}
+		}
+
+		if (this->isKilling()) {
+			pl->decreaseCurHealth(this->getDamageValue());
+			std::cout << pl->getCurHealth() << "\n";
+		}
+
+		return false; 
+	} // для взаимодействующих объектов
 
 	void destructing() { } // для разрушаемых объектов (Coin, Destructible)
 
@@ -124,14 +108,18 @@ private:
 
 class Solid : public Object { // S
 public:
-	Solid();
+	Solid(float, float);
+
+	bool actionOnCollision(Plumber* pl, bool& p_dir);
 };
 
 // трубы, неизменяемые, solid
 
 class Pipe : public Object { // P
 public:
-	Pipe();
+	Pipe(float, float);
+
+	bool actionOnCollision(Plumber* pl, bool& p_dir);
 
 	void setCurrentFrame(float); // меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
 	// float currentFrame отвечает за вид
@@ -143,7 +131,9 @@ public:
 
 class Tap : public Object { // T
 public:
-	Tap();
+	Tap(float, float);
+
+	bool actionOnCollision(Plumber* pl, bool& p_dir);
 
 	void setCurrentFrame(float); // меняет внешний вид в зависимости от положения по отношению к другим таким объектам (изгибы, соединения)
 };
@@ -155,13 +145,21 @@ public:
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
-	bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir); // - если пригнул снизу, то разрушение
+	//bool actionOnCollision(float &dx, float &dy, float &x, float &y, bool& p_dir); // - если пригнул снизу, то разрушение
 
+	bool actionOnCollision(Plumber* pl, bool& p_dir);
+
+	//void setVisible(bool);
+
+	//void setSolid(bool);
 };
+
+
+
 
 class Moving : public Object { // M <-> // m ^
 public:
-	Moving(sf::Texture& image);
+	Moving(float, float);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -195,7 +193,7 @@ public:
 
 class Coin : public Object { // C
 public:
-	Coin();
+	Coin(float, float);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -217,7 +215,7 @@ private:
 
 class BoilingWater : public Object { // Observer // B
 public:
-	BoilingWater();
+	BoilingWater(float, float);
 
 	void display(sf::RenderWindow& window, size_t i, size_t j, float offsetX, float offsetY, float time); // анимация
 
@@ -234,7 +232,7 @@ public:
 	*/
 };
 
-class Jet : public Object, public IObserver { // Observer // J
+class Jet : public Object { // Observer // J
 public:
 	//Jet(sf::Texture& image);
 
@@ -243,7 +241,7 @@ public:
 	//void update(float& time); // синхронно мелькает
 };
 
-class Valve : public Object, public Observable { //Observable // V
+class Valve : public Object { //Observable // V
 public:
 	//Valve(sf::Texture& image);
 
